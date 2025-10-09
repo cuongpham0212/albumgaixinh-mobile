@@ -1,0 +1,13 @@
+baseURL = "https://m.albumgaixinh.netlify.app/"
+title = "Album Gái Xinh (Mobile)"
+theme = ""
+languageCode = "vi"
+paginate = 20
+
+# Dùng content và static từ repo desktop
+contentDir = "site-content/content"
+staticDir  = ["site-content/static"]
+
+# Cấu hình build
+[build]
+writeStats = false
