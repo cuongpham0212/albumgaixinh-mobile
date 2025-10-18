@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <!-- ✅ Head chung (chứa meta, title, canonical, alternate, favicon, OG, v.v.) -->
+  {{ partial "head.html" . }}
+
+  <!-- ✅ Meta robots: đảm bảo mobile không bị index -->
+  <meta name="robots" content="noindex,follow" />
+
+  <!-- ✅ Viewport & Theme color -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#f472b6" />
+
+  <!-- ✅ CSS build sẵn bằng TailwindCSS.exe -->
+  <link rel="stylesheet" href="{{ "css/output.css" | relURL }}" />
+  <link rel="stylesheet" href="{{ "css/mobile-layout.css" | relURL }}" />
+</head>
+
+<body class="{{ .Kind }}">
+  <!-- ========================================================= -->
+  <!-- ✅ HEADER -->
+  <!-- ========================================================= -->
+  {{ partial "header.html" . }}
+
+  <!-- ========================================================= -->
+  <!-- ✅ MAIN CONTENT -->
+  <!-- ========================================================= -->
+  <main class="container mx-auto px-4 py-6">
+    {{ block "main" . }}
+      <div id="posts-container">
+        <p class="text-center text-gray-500">⏳ Đang tải nội dung...</p>
+      </div>
+    {{ end }}
+  </main>
+
+  <!-- ========================================================= -->
+  <!-- ✅ FOOTER -->
+  <!-- ========================================================= -->
+  {{ partial "footer.html" . }}
+
+  <!-- ========================================================= -->
+  <!-- ✅ JS -->
+  <!-- ========================================================= -->
+  <script src="{{ "js/main.js" | relURL }}" crossorigin="anonymous"></script>
+  <script src="{{ "js/menu.js" | relURL }}"></script>
+
+  <!-- ✅ GLightbox (nếu dùng gallery) -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css"
+    crossorigin="anonymous"
+  />
+  <script
+    src="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/js/glightbox.min.js"
+    crossorigin="anonymous"
+  ></script>
+
+  <!-- ✅ Fallback nếu thiếu partial cdn_assets.html -->
+  {{ if templates.Exists "partials/cdn_assets.html" }}
+    {{ partial "cdn_assets.html" . }}
+  {{ else }}
+    <!-- ⚠️ cdn_assets.html chưa tồn tại -->
+  {{ end }}
+
+  <!-- ✅ Nút Back to Top & Gallery Script -->
+  {{ partial "backtotop.html" . }}
+  {{ partial "gallery_script.html" . | safeHTML }}
+</body>
+</html>

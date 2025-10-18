@@ -1,0 +1,11 @@
+{{/* 
+  ✅ Stub cho shortcode cdn_gallery (đã vô hiệu hoá để tránh render trùng)
+  - Không render nội dung gallery thật
+  - Không dùng .Site.IsServer để tránh lỗi build
+  - Giúp giữ shortcode hợp lệ, tránh lỗi "shortcode không tồn tại"
+*/}}
+
+{{/* Thông báo nhỏ khi chạy local để debug (ẩn khi build production) */}}
+{{ if hugo.IsServer }}
+  <p style="display:none;">[DEBUG] cdn_gallery shortcode đã bị vô hiệu hoá, chỉ dùng bản mobile.</p>
+{{ end }}

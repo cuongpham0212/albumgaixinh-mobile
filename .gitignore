@@ -1,0 +1,23 @@
+# =========================================
+# ✅ GITIGNORE TỐI GIẢN CHO HUGO + TAILWIND
+# =========================================
+
+# Hugo build output
+public/
+resources/
+.cache/
+
+# Tailwind CLI (chỉ dùng local)
+tailwindcss.exe
+
+# Node modules
+node_modules/
+package-lock.json
+
+# Hugo stats & cache
+hugo_stats.json
+
+# Editor files
+.vscode/
+.DS_Store
+Thumbs.db

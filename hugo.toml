@@ -1,0 +1,193 @@
+# =====================================================
+# ✅ CẤU HÌNH CƠ BẢN
+# =====================================================
+baseURL = "https://albumgaixinh-mobile.netlify.app/"
+languageCode = "vi"
+title = "Album Gái Xinh (Mobile)"
+relativeURLs = false
+canonifyURLs = true
+enableRobotsTXT = true
+publishDir = "public"
+
+# =====================================================
+# ✅ BUILD (Netlify & Local)
+# =====================================================
+[build]
+  publish = "public"
+  command = "hugo --cleanDestinationDir"
+
+[build.environment]
+  HUGO_VERSION = "0.149.0"
+  HUGO_ENV = "production"
+  TZ = "Asia/Ho_Chi_Minh"
+
+# =====================================================
+# ✅ PHÂN TRANG (hiển thị nhiều hơn trên mobile)
+# =====================================================
+[pagination]
+  pagerSize = 20
+
+# =====================================================
+# ✅ NGUỒN NỘI DUNG & STATIC
+# =====================================================
+contentDir = "content"
+staticDir  = ["static"]
+
+# =====================================================
+# ✅ SEO SONG SONG VỚI BẢN DESKTOP
+# =====================================================
+[params]
+  # ✅ Flag nhận diện mobile
+  isMobile = true
+
+  # ✅ Mô tả & từ khóa
+  description      = "Phiên bản mobile chính thức của Album Gái Xinh – giao diện tối ưu, tải nhanh, hình ảnh sắc nét."
+  siteDescription  = "Album Gái Xinh – nơi bạn khám phá bộ sưu tập ảnh gái xinh nghệ thuật, dễ thương, sexy, tinh tế."
+  siteKeywords     = "ảnh gái xinh mobile, hot girl, người mẫu sexy, idol Trung Quốc, Hàn Quốc, Nhật Bản"
+  defaultImage     = "images/cover.jpg"
+
+  # ✅ SEO song song desktop ↔ mobile
+  canonicalDomain  = "https://albumgaixinh.netlify.app"
+  desktopDomain    = "https://albumgaixinh.netlify.app"
+  mobileDomain     = "https://albumgaixinh-mobile.netlify.app"
+
+  # ✅ Metadata
+  author       = "Album Gái Xinh Team"
+  publisher    = "Album Gái Xinh"
+  organization = "Album Gái Xinh"
+  locale       = "vi_VN"
+
+  # ✅ Mạng xã hội
+  facebook  = "https://www.facebook.com/"
+  twitter   = "https://twitter.com/"
+  instagram = "https://www.instagram.com/"
+  tiktok    = "https://www.tiktok.com/"
+
+# =====================================================
+# ✅ FRONTMATTER
+# =====================================================
+[frontmatter]
+  date = ["date", ":default"]
+
+# =====================================================
+# ✅ OUTPUTS (tối ưu, không còn JSON API)
+# =====================================================
+[outputs]
+  home     = ["HTML", "SITEMAP"]
+  section  = ["HTML", "SITEMAP"]
+  taxonomy = ["HTML"]
+  term     = ["HTML"]
+  page     = ["HTML"]
+
+# =====================================================
+# ✅ SITEMAP XML (gọn, nhẹ)
+# =====================================================
+[sitemap]
+  changefreq = "weekly"
+  priority   = 0.6
+  filename   = "sitemap.xml"
+ 
+
+# =====================================================
+# ✅ MIME & HEADERS CHO NETLIFY
+# =====================================================
+[[headers]]
+  for = "/sitemap.xml"
+  [headers.values]
+    Content-Type = "application/xml; charset=UTF-8"
+
+# =====================================================
+# ✅ MENU CHÍNH (HEADER)
+# =====================================================
+[menu]
+
+  [[menu.main]]
+    name = "Trang chủ"
+    url = "/"
+    weight = 1
+
+  [[menu.main]]
+    name = "Ảnh gái xinh"
+    url = "/anh-gai-xinh/"
+    identifier = "anh-gai-xinh"
+    weight = 2
+
+  [[menu.main]]
+    parent = "anh-gai-xinh"
+    name = "Trung Quốc"
+    url = "/anh-gai-xinh/trung-quoc/"
+    weight = 1
+
+  [[menu.main]]
+    parent = "anh-gai-xinh"
+    name = "Nhật Bản"
+    url = "/anh-gai-xinh/nhat/"
+    weight = 2
+
+  [[menu.main]]
+    parent = "anh-gai-xinh"
+    name = "Hàn Quốc"
+    url = "/anh-gai-xinh/han-quoc/"
+    weight = 3
+
+  [[menu.main]]
+    parent = "anh-gai-xinh"
+    name = "Âu Mỹ"
+    url = "/anh-gai-xinh/au-my/"
+    weight = 4
+
+  [[menu.main]]
+    parent = "anh-gai-xinh"
+    name = "Thái Lan"
+    url = "/anh-gai-xinh/thai-lan/"
+    weight = 5
+
+  [[menu.main]]
+    parent = "anh-gai-xinh"
+    name = "Việt Nam"
+    url = "/anh-gai-xinh/viet-nam/"
+    weight = 6
+
+  [[menu.main]]
+    parent = "anh-gai-xinh"
+    name = "Châu Á"
+    url = "/anh-gai-xinh/chau-a/"
+    weight = 7
+
+  [[menu.main]]
+    name = "Album Hot"
+    url = "/album-hot/"
+    weight = 3
+
+  [[menu.main]]
+    name = "Giới thiệu"
+    url = "/gioi-thieu/"
+    weight = 4
+
+# =====================================================
+# ✅ MENU FOOTER
+# =====================================================
+[[menu.footer]]
+  name = "Chính sách bảo mật"
+  url = "/privacy-policy/"
+  weight = 1
+
+[[menu.footer]]
+  name = "Điều khoản sử dụng"
+  url = "/terms-of-service/"
+  weight = 2
+
+[[menu.footer]]
+  name = "Giải tỏa nỗi lòng"
+  url = "https://giaitoanoilong.netlify.app/"
+  weight = 3
+
+# =====================================================
+# ✅ NGÔN NGỮ
+# =====================================================
+[Languages]
+  [Languages.vi]
+    languageName = "Tiếng Việt"
+    weight = 1
+    languageCode = "vi-VN"
+    contentDir = "content"

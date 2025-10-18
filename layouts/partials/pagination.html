@@ -1,0 +1,26 @@
+{{ if . }}
+  {{ $p := . }}
+  <div class="pagination-container">
+    <!-- Previous Button -->
+    {{ if gt $p.PageNumber 1 }}
+      <a href="{{ $p.Prev.URL }}" class="page-btn prev-btn">← Trước</a>
+    {{ end }}
+
+    <!-- Page Numbers -->
+    <div class="page-numbers">
+      {{ range $i, $page := seq 1 $p.TotalPages }}
+        {{ if eq $i $p.PageNumber }}
+          <span class="page-number active">{{ $i }}</span>
+        {{ else }}
+          {{ $pageURL := (cond (eq $i 1) $p.First.URL (printf "%s/page/%d/" $p.First.URL $i)) }}
+          <a href="{{ $pageURL }}" class="page-number">{{ $i }}</a>
+        {{ end }}
+      {{ end }}
+    </div>
+
+    <!-- Next Button -->
+    {{ if lt $p.PageNumber $p.TotalPages }}
+      <a href="{{ $p.Next.URL }}" class="page-btn next-btn">Sau →</a>
+    {{ end }}
+  </div>
+{{ end }}

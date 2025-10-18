@@ -1,0 +1,80 @@
+<!-- layouts/partials/hero-single.html -->
+<section id="hero-single"
+         class="max-w-6xl mx-auto px-4 py-6 opacity-0 animate-fadeIn">
+
+  <div class="hero-box relative mx-auto">
+    <!-- Tiêu đề typewriter -->
+    <h1 id="typewriter-single"
+        class="text-2xl md:text-3xl font-bold text-gray-900 mb-4 leading-snug text-center"
+        data-text='{{ .Title | safeJS }}'>
+    </h1>
+
+    <!-- Mô tả -->
+    {{ if .Description }}
+      <div class="hero-desc text-gray-700 leading-relaxed text-base md:text-lg text-center">
+        {{ .Description }}
+      </div>
+    {{ else }}
+      <div class="hero-desc text-gray-700 leading-relaxed text-base md:text-lg text-justify">
+        Bộ sưu tập <strong>{{ .Title }}</strong> là một phần trong chuyên mục 
+        <strong>{{ humanize .Section }}</strong>, nơi tổng hợp những concept ảnh gái xinh 
+        gợi cảm, nghệ thuật và tinh tế.  
+        Mỗi khung hình mang đến cảm xúc riêng – từ ánh sáng, trang phục cho đến 
+        thần thái của người mẫu – tạo nên một trải nghiệm thị giác hấp dẫn, 
+        không dung tục, đậm chất nghệ thuật.
+      </div>
+    {{ end }}
+  </div>
+</section>
+
+<!-- Hiệu ứng xuất hiện -->
+<style>
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fadeIn { animation: fadeIn 1.2s ease-out forwards; }
+
+  /* Hộp hero */
+  .hero-box {
+    background: #fff;
+    border: 1.5px solid #f9a8d4;
+    border-radius: 1rem;
+    padding: 16px 20px;
+    box-shadow: 0 4px 14px rgba(249, 168, 212, 0.25);
+    transition: all 0.3s ease;
+    width: 100%;
+  }
+  .hero-box:hover {
+    border-color: #ec4899;
+    box-shadow: 0 6px 18px rgba(236, 72, 153, 0.32);
+    transform: translateY(-3px);
+  }
+
+  /* Mobile tối ưu */
+  @media (min-width: 640px) {
+    .hero-box {
+      padding: 24px 32px;
+    }
+  }
+
+  .hero-desc p { margin: 0.35rem 0 !important; }
+  .hero-desc strong { color: #d81b60; }
+</style>
+
+<!-- Typewriter Script -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const el = document.getElementById("typewriter-single");
+  const text = el.getAttribute("data-text") || document.title;
+  let i = 0;
+  function type() {
+    if (i < text.length) {
+      el.textContent += text.charAt(i);
+      i++;
+      setTimeout(type, 55);
+    }
+  }
+  type();
+});
+</script>

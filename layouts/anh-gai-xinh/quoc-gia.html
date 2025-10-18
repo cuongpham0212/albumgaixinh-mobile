@@ -1,0 +1,130 @@
+{{ define "main" }}
+  <div class="container mx-auto px-4">
+
+    <!-- ✅ Hero -->
+    {{ partial "hero.html" . }}
+
+    <!-- ✅ Đoạn mô tả tóm tắt (phần trước -more-) -->
+    {{ with .Summary }}
+      <div class="summary-box max-w-5xl mx-auto bg-gray-50 border border-gray-200 rounded-2xl p-5 mt-4 mb-6 shadow-sm text-gray-700 text-justify leading-relaxed">
+        {{ . | safeHTML }}
+      </div>
+    {{ end }}
+
+    <!-- ✅ Nếu có Section con (vd: /anh-gai-xinh/ có /trung-quoc/, /han-quoc/...) -->
+    {{ if gt (len .Sections) 0 }}
+      {{ range .Sections }}
+        <section class="mb-8">
+          <!-- ✅ Tiêu đề quốc gia -->
+          <div class="flex justify-center mb-5">
+            <h2 class="country-title">
+              <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            </h2>
+          </div>
+          {{ partial "album-grid.html" (.Pages.ByDate.Reverse) }}
+        </section>
+      {{ end }}
+
+      <!-- ✅ Hiển thị seo.md (chia more: trên/dưới grid nếu có) -->
+      {{ $seoPath := printf "content/%sseo.md" .File.Dir }}
+      {{ if (fileExists $seoPath) }}
+        {{ $raw := readFile $seoPath }}
+        {{ $clean := replaceRE `(?s)^---.*?---\s*` "" $raw | replaceRE `(?s)^\+\+\+.*?\+\+\+\s*` "" }}
+        {{ $parts := split $clean "<!--more-->" }}
+        {{ $seoTop := index $parts 0 | markdownify }}
+        {{ $seoBottom := "" }}
+        {{ if gt (len $parts) 1 }}
+          {{ $seoBottom = index $parts 1 | markdownify }}
+        {{ end }}
+
+        <!-- ✅ Phần TRÊN more -->
+        {{ if $seoTop }}
+          <div class="mt-8 mb-8">
+            <div class="max-w-6xl mx-auto bg-gray-50 border border-gray-200 rounded-2xl p-6 prose text-gray-700 text-justify leading-relaxed shadow-sm">
+              {{ $seoTop | safeHTML }}
+            </div>
+          </div>
+        {{ end }}
+
+        <!-- ✅ Phần DƯỚI more -->
+        {{ if $seoBottom }}
+          <div class="mt-10 mb-10">
+            <div class="max-w-6xl mx-auto bg-gray-50 border border-gray-200 rounded-2xl p-6 prose text-gray-700 text-justify leading-relaxed shadow-sm">
+              {{ $seoBottom | safeHTML }}
+            </div>
+          </div>
+        {{ end }}
+      {{ end }}
+
+    <!-- ✅ Ngược lại: nếu là trang quốc gia (vd: /trung-quoc/) -->
+    {{ else }}
+      <section class="mb-8">
+        <div class="flex justify-center mb-5">
+          <h2 class="country-title">{{ .Title }}</h2>
+        </div>
+
+        <!-- ✅ Lấy và chia SEO.md trước grid -->
+        {{ $seoPath := printf "content/%sseo.md" .File.Dir }}
+        {{ $seoTop := "" }}
+        {{ $seoBottom := "" }}
+        {{ if (fileExists $seoPath) }}
+          {{ $raw := readFile $seoPath }}
+          {{ $clean := replaceRE `(?s)^---.*?---\s*` "" $raw | replaceRE `(?s)^\+\+\+.*?\+\+\+\s*` "" }}
+          {{ $parts := split $clean "<!--more-->" }}
+          {{ $seoTop = index $parts 0 | markdownify }}
+          {{ if gt (len $parts) 1 }}
+            {{ $seoBottom = index $parts 1 | markdownify }}
+          {{ end }}
+        {{ end }}
+
+        <!-- ✅ Phần TRÊN more -->
+        {{ if $seoTop }}
+          <div class="mt-8 mb-8">
+            <div class="max-w-6xl mx-auto bg-gray-50 border border-gray-200 rounded-2xl p-6 prose text-gray-700 text-justify leading-relaxed shadow-sm">
+              {{ $seoTop | safeHTML }}
+            </div>
+          </div>
+        {{ end }}
+
+        <!-- ✅ Album grid -->
+        {{ $paginator := .Paginate (.Pages.ByDate.Reverse) }}
+        {{ partial "album-grid.html" $paginator.Pages }}
+        {{ partial "pagination.html" $paginator }}
+
+        <!-- ✅ Phần DƯỚI more -->
+        {{ if $seoBottom }}
+          <div class="mt-10 mb-10">
+            <div class="max-w-6xl mx-auto bg-gray-50 border border-gray-200 rounded-2xl p-6 prose text-gray-700 text-justify leading-relaxed shadow-sm">
+              {{ $seoBottom | safeHTML }}
+            </div>
+          </div>
+        {{ end }}
+      </section>
+    {{ end }}
+
+    <!-- ✅ Nội dung SEO (phần sau more trong _index.md nếu có) -->
+    {{ $rest := replace .Content .Summary "" }}
+    {{ $rest := replaceRE `(?i)<!--more-->` "" $rest }}
+    {{ with $rest }}
+      <div class="mt-10">
+        <div class="max-w-6xl mx-auto bg-gray-50 border border-gray-200 rounded-2xl p-6 prose text-gray-700 text-justify leading-relaxed shadow-sm">
+          {{ . | safeHTML }}
+        </div>
+      </div>
+    {{ end }}
+  </div>
+
+  <!-- ✅ CSS phụ trợ -->
+  <style>
+    .summary-box {font-size: 1rem; line-height: 1.7rem;}
+    .album-card {background:#fff;border-radius:1rem;overflow:hidden;transition:transform .25s,box-shadow .25s;}
+    .album-card:hover{transform:translateY(-3px);box-shadow:0 6px 12px rgba(0,0,0,0.08);}
+    .album-card img{width:100%;height:200px;object-fit:cover;}
+    .country-title{display:inline-block;background:linear-gradient(135deg,#fbcfe8,#f472b6);color:#9d174d;font-weight:700;
+      font-size:1.3rem;border-radius:9999px;padding:0.4rem 1.5rem;border:1px solid #f9a8d4;box-shadow:0 3px 6px rgba(0,0,0,0.05);
+      transition:all .3s;text-transform:capitalize;}
+    .country-title:hover{transform:translateY(-2px);background:linear-gradient(135deg,#f9a8d4,#ec4899);color:#fff;
+      box-shadow:0 4px 10px rgba(236,72,153,0.3);}
+    .prose p{text-align:justify;text-justify:inter-word;margin-bottom:0.75rem;}
+  </style>
+{{ end }}

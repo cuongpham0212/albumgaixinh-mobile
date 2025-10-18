@@ -1,0 +1,28 @@
+<!-- =========================================================
+✅ HEADER.HTML — Fix khoảng cách + tương thích Tailwind v4
+========================================================= -->
+<header class="bg-pink-600 text-white shadow-md sticky top-0 z-[3000]">
+  <div class="flex items-center justify-start px-3 py-2 h-[54px] gap-4">
+
+    <!-- 🔹 Logo + title -->
+    <a href="{{ "/" | relURL }}" 
+       class="flex items-center gap-2 no-underline text-white">
+      <img src="{{ "logo.png" | relURL }}" 
+           alt="Logo"
+           class="h-7 w-auto max-w-[110px] rounded-sm bg-white/20 p-[2px] shadow-sm object-contain"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <span class="font-semibold text-base tracking-wide leading-tight logo-text">
+        {{ .Site.Title }}
+      </span>
+    </a>
+
+    <!-- 🔹 Nút mở menu -->
+    <button class="menu-toggle text-[1.6rem] focus:outline-none hover:scale-110 transition-transform duration-200 ml-4"
+            aria-label="Mở menu">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+</header>
+
+<!-- ✅ Gọi partial menu mobile riêng -->
+{{ partial "mobile-menu.html" . }}

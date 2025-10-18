@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Đang mở quảng cáo...</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #0d0d0d;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-family: system-ui, sans-serif;
+    }
+    h2 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+    p { font-size: 1rem; color: #ccc; }
+    #countdown {
+      font-size: 3rem;
+      margin: 1rem 0;
+      color: #ff006e;
+      font-weight: bold;
+    }
+    footer {
+      position: absolute;
+      bottom: 12px;
+      font-size: 0.8rem;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>💋 Đang hiển thị quảng cáo...</h2>
+  <p>Vui lòng chờ <span id="countdown">10</span> giây để mở khoá album</p>
+
+  <!-- ✅ Mã quảng cáo Social Bar (được bảo vệ raw Hugo) -->
+  {{`<script type="text/javascript"
+        src="//pl27755613.effectivegatecpm.com/14/6a/67/146a67a2abc2c71f2e2e007b32802a2d.js">
+  </script>` | safeHTML }}
+
+  <footer>© {{ now.Year }} Album Gái Xinh — Cảm ơn bạn đã ủng hộ 💖</footer>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const redirect = params.get("redirect");
+    let countdown = 10;
+    const cdEl = document.getElementById("countdown");
+
+    const timer = setInterval(() => {
+      countdown--;
+      cdEl.textContent = countdown;
+      if (countdown <= 0) {
+        clearInterval(timer);
+        if (redirect.includes("?")) {
+          window.location.href = redirect + "&unlock=1";
+        } else {
+          window.location.href = redirect + "?unlock=1";
+        }
+      }
+    }, 1000);
+  </script>
+
+</body>
+</html>

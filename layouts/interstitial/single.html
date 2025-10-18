@@ -1,0 +1,89 @@
+{{ define "main" }} 
+  <div class="flex flex-col items-center justify-center min-h-screen w-full bg-black text-white text-center p-0 m-0">
+
+    <!-- ✅ Quảng cáo interstitial -->
+    <div id="ad" class="mb-6 w-full">
+      <script src="//pl27755613.revenuecpmgate.com/14/6a/67/146a67a2abc2c71f2e2e007b32802a2d.js"></script>
+    </div>
+
+    <!-- ✅ Đếm ngược -->
+    <p class="countdown text-lg md:text-xl font-light mb-4">
+      Quảng cáo đang chạy... Album nude sẽ mở sau <span id="count">10</span> giây 💋
+    </p>
+
+    <p class="mt-2 text-sm text-gray-400 italic">
+      (Cảm ơn bạn đã dành chút thời gian xem quảng cáo để ủng hộ website 💖)
+    </p>
+  </div>
+
+  <style>
+    body.interstitial, main.bg-gray-50 {
+      background: #000 !important;
+      margin: 0;
+      padding: 0;
+    }
+    body.interstitial header,
+    body.interstitial footer,
+    body.interstitial #backToTop {
+      display: none !important;
+    }
+    #count {
+      font-weight: bold;
+      color: #ff4d6d;
+      font-size: 1.3em;
+    }
+  </style>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // ✅ GA4 tracking
+      if (typeof gtag === "function") {
+        gtag("event", "page_view_interstitial", {
+          page_title: "Interstitial Ad Page",
+          page_path: location.pathname,
+          ad_type: "interstitial"
+        });
+        console.log("📊 GA4 event: page_view_interstitial");
+      }
+
+      // ✅ Countdown logic
+      let sec = 10;
+      const countEl = document.getElementById("count");
+      const params = new URLSearchParams(window.location.search);
+      let targetUrl = params.get("redirect") || "/";
+
+      // 🔧 Chuẩn hóa URL redirect để tránh lỗi 404
+      if (!targetUrl.startsWith("http")) {
+        // Thêm dấu "/" đầu nếu thiếu
+        if (!targetUrl.startsWith("/")) targetUrl = "/" + targetUrl;
+
+        // Xóa phần .html nếu có (Hugo không dùng .html)
+        targetUrl = targetUrl.replace(/\.html?$/, "/");
+
+        // Ghép domain đầy đủ
+        targetUrl = window.location.origin + targetUrl;
+      }
+
+      const adPopUrl = "https://www.effectivegatecpm.com/r7a2sct7?key=04b93d5d8f50d03d4cfb8cbdb1376312";
+
+      const timer = setInterval(() => {
+        sec--;
+        if (sec >= 0) countEl.innerText = sec;
+        if (sec <= 0) {
+          clearInterval(timer);
+          openAlbum();
+        }
+      }, 1000);
+
+      function openAlbum() {
+        try {
+          window.open(adPopUrl, "_blank", "noopener");
+        } catch (e) {
+          console.warn("⚠️ Không mở được tab quảng cáo:", e);
+        }
+        const joiner = targetUrl.includes("?") ? "&" : "?";
+        window.location.replace(targetUrl + joiner + "unlock=1");
+      }
+    });
+  </script>
+{{ end }}

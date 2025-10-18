@@ -1,0 +1,137 @@
+{{/*  
+====================================================
+💡 QUẢN LÝ GLIGHTBOX & ZOOM CONTROL (bản fix chuẩn)
+----------------------------------------------------
+✅ Tương thích với baseof.html và Hugo 0.149+
+✅ Không còn lỗi fingerprint (<nil> / ResourceTransformer)
+✅ Giữ nguyên logic zoom, fullscreen, chống trùng instance
+====================================================
+*/}}
+
+<!-- ✅ Chỉ tải GLightbox nếu chưa được load -->
+<script>
+if (!window.__glightboxLoaded) {
+  const css = document.createElement("link");
+  css.rel = "stylesheet";
+  css.href = "https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css";
+  css.crossOrigin = "anonymous";
+  document.head.appendChild(css);
+
+  const js = document.createElement("script");
+  js.src = "https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/js/glightbox.min.js";
+  js.crossOrigin = "anonymous";
+  js.onload = () => window.__glightboxLoaded = true;
+  document.head.appendChild(js);
+}
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  if (typeof GLightbox !== "function") return;
+
+  // ✅ Dùng lại instance cũ nếu có
+  let lb = window.__mainLightbox || null;
+  if (!lb) {
+    lb = GLightbox({
+      selector: ".glightbox",
+      loop: true,
+      touchNavigation: true,
+      zoomable: false
+    });
+    window.__mainLightbox = lb;
+  }
+
+  // ✅ Khi lightbox mở
+  document.addEventListener("glightbox_open", () => {
+    setTimeout(() => {
+      const container = document.querySelector(".glightbox-container");
+      if (!container) return;
+
+      // Xóa cụm nút cũ nếu có
+      const old = container.querySelector("#glx-controls");
+      if (old) old.remove();
+
+      // ✅ Tạo cụm 4 nút góc phải trên
+      const controls = document.createElement("div");
+      controls.id = "glx-controls";
+      Object.assign(controls.style, {
+        position: "absolute",
+        top: "20px",
+        right: "20px",
+        display: "flex",
+        gap: "10px",
+        zIndex: "9999999",
+      });
+
+      // Hàm tạo nút
+      function makeBtn(symbol, id, title) {
+        const btn = document.createElement("button");
+        btn.id = id;
+        btn.textContent = symbol;
+        btn.title = title;
+        Object.assign(btn.style, {
+          width: "42px",
+          height: "42px",
+          borderRadius: "50%",
+          border: "none",
+          background: "rgba(0,0,0,0.75)",
+          color: "#fff",
+          fontSize: "18px",
+          cursor: "pointer",
+          transition: "all 0.2s ease",
+          boxShadow: "0 2px 6px rgba(0,0,0,0.4)",
+        });
+        btn.onmouseenter = () => (btn.style.background = "rgba(255,255,255,0.9)");
+        btn.onmouseleave = () => (btn.style.background = "rgba(0,0,0,0.75)");
+        return btn;
+      }
+
+      const zoomOutBtn = makeBtn("−", "glx-zoom-out", "Thu nhỏ");
+      const resetBtn   = makeBtn("⟳", "glx-reset", "Về gốc");
+      const zoomInBtn  = makeBtn("+", "glx-zoom-in", "Phóng to");
+      const fsBtn      = makeBtn("⛶", "glx-fullscreen", "Toàn màn hình");
+      controls.append(zoomOutBtn, resetBtn, zoomInBtn, fsBtn);
+      container.appendChild(controls);
+
+      // ===== Logic zoom & fullscreen =====
+      let zoomLevel = 1;
+      const step = 0.25, minZoom = 1, maxZoom = 5;
+
+      function getImg() {
+        return container.querySelector(".gslide img") || container.querySelector("img");
+      }
+      function applyZoom(scale) {
+        const img = getImg();
+        if (!img) return;
+        img.style.transition = "transform 0.15s ease-out";
+        img.style.transformOrigin = "center center";
+        img.style.transform = `scale(${scale})`;
+      }
+
+      zoomInBtn.onclick = () => { zoomLevel = Math.min(maxZoom, zoomLevel + step); applyZoom(zoomLevel); };
+      zoomOutBtn.onclick = () => { zoomLevel = Math.max(minZoom, zoomLevel - step); applyZoom(zoomLevel); };
+      resetBtn.onclick = () => { zoomLevel = 1; applyZoom(1); };
+      fsBtn.onclick = () => {
+        const img = getImg();
+        if (!img) return;
+        if (!document.fullscreenElement) {
+          (img.requestFullscreen || img.webkitRequestFullscreen || (()=>{})).call(img);
+        } else {
+          (document.exitFullscreen || document.webkitExitFullscreen || (()=>{})).call(document);
+        }
+      };
+
+      lb.on("slide_changed", () => { zoomLevel = 1; applyZoom(1); });
+      lb.on("close", () => {
+        const ctrls = document.getElementById("glx-controls");
+        if (ctrls) ctrls.remove();
+      });
+    }, 300);
+  });
+});
+</script>
+
+<!-- ✅ Custom CSS -->
+<link rel="stylesheet" href="{{ "css/mobile-layout.css" | relURL }}" crossorigin="anonymous" />
+
+

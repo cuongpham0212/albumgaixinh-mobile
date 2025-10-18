@@ -1,0 +1,48 @@
+{{/* layouts/partials/gallery_nude.html */}}
+{{ $page := .page }}
+{{ $thumbsNude := .thumbsNude }}
+{{ $nudes := .nudes }}
+
+{{ with $thumbsNude }}
+  {{ if gt (len .) 0 }}
+    <div class="text-center mt-10">
+      <button id="unlock-nude-btn"
+              class="w-11/12 max-w-sm py-4 text-lg font-semibold text-white rounded-3xl bg-gradient-to-r from-pink-600 to-red-600 shadow-lg hover:from-red-600 hover:to-pink-500 transition-transform duration-300 transform active:scale-95">
+        💋 Mở album nude (xem quảng cáo 10s)
+      </button>
+    </div>
+<!-- ✅ Phần cảm ơn: thêm id để làm điểm cuộn sau khi quay lại -->
+    
+    <style>
+      #unlock-nude-btn { animation: glowPulse 2.5s ease-in-out infinite; }
+      @keyframes glowPulse {
+        0% { box-shadow: 0 0 0 rgba(255, 77, 109, 0.6); }
+        50% { box-shadow: 0 0 16px rgba(255, 77, 109, 0.6); }
+        100% { box-shadow: 0 0 0 rgba(255, 77, 109, 0.6); }
+      }
+    </style>
+
+    <!-- ✅ JSON dữ liệu ảnh nude -->
+    <script id="nude-data-{{ $page.File.UniqueID }}" type="application/json">
+      {
+        "thumbs": [
+          {{ range $index, $src := $thumbsNude }}
+            "{{ $src }}"{{ if lt (add $index 1) (len $thumbsNude) }},{{ end }}
+          {{ end }}
+        ],
+        "full": [
+          {{ range $index, $src := $nudes }}
+            "{{ $src }}"{{ if lt (add $index 1) (len $nudes) }},{{ end }}
+          {{ end }}
+        ]
+      }
+    </script>
+  {{ end }}
+{{ end }}
+
+<!-- ✅ Khung hiển thị album nude -->
+<div id="nude-gallery-wrapper" class="px-2"></div>
+
+{{ if and (not $thumbsNude) }}
+  <p class="text-gray-500 text-center mt-6">Album này chưa có ảnh.</p>
+{{ end }}

@@ -1,0 +1,147 @@
+{{ define "main" }}
+  <!-- ✅ Hero Section -->
+  {{ partial "hero.html" . }}
+
+  <!-- ✅ Các chuyên mục chính -->
+  <div class="flex flex-wrap justify-center gap-3 mt-2 mb-4">
+    {{ range .Sections }}
+      <a href="{{ .RelPermalink }}" class="category-pill">{{ .Title }}</a>
+    {{ end }}
+  </div>
+
+  <!-- ✅ Nội dung chính (content SEO) -->
+  {{ if .Content }}
+    <article class="prose text-gray-800 max-w-5xl mx-auto my-4 leading-relaxed seo-box">
+      {{ .Content }}
+    </article>
+  {{ end }}
+
+  <!-- ✅ Bài viết mới nhất -->
+  <section class="mb-8 mt-4">
+    <h2 class="text-xl font-semibold mb-4 text-center text-gray-900">Bài viết mới nhất</h2>
+
+    {{ $paginator := .Paginate (where .Site.RegularPages "Kind" "page") }}
+    <div class="album-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      {{ range $paginator.Pages }}
+        <div class="album-card relative bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:border-pink-400">
+          <a href="{{ .RelPermalink }}" class="block">
+            {{ $imgs := or .Params.thumbs .Params.images }}
+            {{ if not $imgs }}{{ $imgs = .Resources.ByType "image" }}{{ end }}
+            {{ if gt (len $imgs) 0 }}
+              {{ $first := index $imgs 0 }}
+              {{ $src := "" }}
+              {{ if (printf "%T" $first | strings.Contains "string") }}
+                {{ $src = $first }}
+              {{ else }}
+                {{ $src = $first.RelPermalink }}
+              {{ end }}
+              <div class="relative overflow-hidden group">
+                <img src="{{ $src }}" alt="{{ .Title }}" class="w-full h-[190px] object-cover transition-transform duration-500 group-hover:scale-110 group-hover:brightness-90" loading="lazy">
+              </div>
+              <p class="text-center mt-1 text-sm text-gray-600">{{ len $imgs }} ảnh</p>
+            {{ else }}
+              <div class="relative overflow-hidden group">
+                <img src="{{ "images/cover.jpg" | absURL }}" alt="{{ .Title }}" class="w-full h-[190px] object-cover transition-transform duration-500 group-hover:scale-110 group-hover:brightness-90" loading="lazy">
+              </div>
+              <p class="text-center mt-1 text-sm text-gray-600">0 ảnh</p>
+            {{ end }}
+          </a>
+
+          <div class="album-info text-center p-2">
+            <h3 class="font-semibold text-sm md:text-base text-gray-800 hover:text-pink-600 transition">
+              <a href="{{ .RelPermalink }}" class="hover:underline">{{ .Title }}</a>
+            </h3>
+          </div>
+        </div>
+      {{ end }}
+    </div>
+
+    <!-- ✅ Phân trang -->
+    {{ partial "pagination.html" $paginator }}
+  </section>
+
+  <!-- ✅ CSS giao diện -->
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn { animation: fadeIn 1.3s ease-out forwards; }
+
+    /* ====== Nút chuyên mục ====== */
+    .category-pill {
+      display: inline-block;
+      padding: 0.4rem 1rem;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, #fce7f3, #fbcfe8);
+      border: 1px solid #f9a8d4;
+      color: #9d174d;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      text-transform: capitalize;
+    }
+    .category-pill:hover {
+      background: linear-gradient(135deg, #f9a8d4, #ec4899);
+      color: #fff;
+      transform: translateY(-1px);
+      box-shadow: 0 3px 6px rgba(236,72,153,0.25);
+    }
+
+    /* ====== SEO Box ====== */
+    .seo-box {
+      background: #fff;
+      border: 1.5px solid #f9a8d4;
+      border-radius: 1rem;
+      box-shadow: 0 3px 8px rgba(249,168,212,0.12);
+      padding: 1rem 1.25rem;
+      transition: all 0.3s ease;
+    }
+    .seo-box:hover {
+      border-color: #ec4899;
+      box-shadow: 0 5px 10px rgba(236,72,153,0.25);
+      transform: translateY(-2px);
+    }
+
+    /* ====== Album Card ====== */
+    .album-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 1rem;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .album-card:hover {
+      border-color: #f9a8d4;
+      box-shadow: 0 6px 14px rgba(249,168,212,0.25);
+      transform: translateY(-2px);
+    }
+
+    /* ====== Văn bản ====== */
+    .album-info h3 { color: #333; font-weight: 600; }
+    .prose p { text-align: justify; text-justify: inter-word; line-height: 1.65; }
+
+    /* ====== Tối ưu khoảng cách ====== */
+    #hero { margin-bottom: 0.25rem; }
+    .category-pill { margin: 0.2rem; }
+    article.prose { margin-top: 0.75rem; margin-bottom: 1rem; }
+    .album-grid { margin-top: 0.4rem; }
+    section { margin-top: 0.5rem; margin-bottom: 0.5rem; }
+
+    @media (min-width: 1024px) {
+      .prose, .album-grid {
+        max-width: 72rem;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    /* Ẩn hoàn toàn mọi interstitial */
+    [id*="interstitial"], [class*="interstitial"] {
+      display: none !important; visibility: hidden !important;
+      opacity: 0 !important; height: 0 !important; width: 0 !important;
+      overflow: hidden !important;
+    }
+  </style>
+{{ end }}

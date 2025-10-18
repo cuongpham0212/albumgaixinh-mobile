@@ -1,0 +1,44 @@
+{{ define "main" }}
+  <div class="container mx-auto px-3 pt-10"> <!-- ✅ Thêm pt-6 để tránh dính thanh bar -->
+
+    <!-- ✅ Hero với hiệu ứng hover nhẹ, KHÔNG scale to desktop -->
+    <div class="rounded-lg shadow-sm hover:shadow-md transition duration-300 ease-in-out">
+      {{ partial "hero-single.html" . }}
+    </div>
+
+    <!-- ✅ Nội dung bài viết (render tĩnh) -->
+    <article class="prose mx-auto mb-6 text-justify leading-relaxed text-base">
+      {{ .Content }}
+    </article>
+
+    <!-- ✅ Nếu trang có shortcode gallery (ảnh trong bài) -->
+    {{ if .HasShortcode "cdn_gallery" }}
+      {{ partial "shortcodes/cdn_gallery_mobile.html" . }}
+    {{ end }}
+
+    <!-- ✅ Nút quay lại danh sách -->
+    <div class="text-center mt-8">
+      <a href="{{ with .CurrentSection }}{{ .RelPermalink }}{{ else }}{{ "/" }}{{ end }}"
+         class="inline-block bg-pink-600 text-white py-2 px-4 rounded-lg shadow-md hover:bg-pink-700 transition">
+        ← Trở lại danh sách
+      </a>
+    </div>
+
+    <!-- ✅ CHỈ CHÈN PHÂN TRANG KHI Ở SECTION/LIST -->
+    {{ if or (eq .Kind "section") (eq .Kind "list") }}
+      <div class="mt-6">
+        {{ partial "pagination.html" . }}
+      </div>
+    {{ end }}
+
+  </div>
+
+  <!-- ✅ Footer mặc định ở layout ngoài vẫn giữ nguyên -->
+
+  <!-- ✅ GỌI PARTIAL BÀI VIẾT LIÊN QUAN -->
+  {{ partial "related-carousel.html" . }}
+
+  <!-- ✅ Script -->
+  <script src="{{ "js/main.js" | relURL }}?v={{ now.Unix }}" crossorigin="anonymous"></script>
+  {{ partial "cdn_assets.html" . }}
+{{ end }}

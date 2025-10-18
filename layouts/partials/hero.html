@@ -1,0 +1,102 @@
+<section id="hero"
+         class="text-center max-w-6xl mx-auto px-4 py-8 opacity-0 animate-fadeIn">
+
+  <!-- ✅ Chỉ lấy dòng đầu tiên bắt đầu bằng dấu # -->
+  {{ $raw := .RawContent }}
+  {{ $h1 := "" }}
+  {{ range (split $raw "\n") }}
+    {{ if and (eq $h1 "") (hasPrefix . "# ") }}
+      {{ $h1 = (replaceRE "^# " "" .) }}
+    {{ end }}
+  {{ end }}
+
+  <h1 id="typewriter"
+      class="text-3xl md:text-4xl font-bold text-gray-900 mb-3 leading-snug"
+      data-text='{{ if $h1 }}{{ $h1 | safeJS }}{{ else }}{{ .Title | safeJS }}{{ end }}'>
+  </h1>
+
+  <!-- ✅ Hero Home -->
+  {{ if .IsHome }}
+    <div class="hero-box text-gray-700 leading-relaxed text-base md:text-lg w-full mx-auto text-justify">
+      <p>
+        <strong>Album Gái Xinh</strong> – nơi tổng hợp <strong>ảnh gái đẹp, hot girl sexy</strong> và 
+        <strong>bộ ảnh gợi cảm nghệ thuật</strong> được yêu thích nhất hiện nay.
+        Tại đây bạn có thể xem hàng ngàn <strong>album gái xinh Việt Nam, Hàn Quốc, Trung Quốc</strong>
+        với đủ phong cách: dễ thương, quyến rũ, nóng bỏng hay nhẹ nhàng tinh tế.
+      </p>
+      <p>
+        Mỗi bộ ảnh đều được chọn lọc kỹ lưỡng để mang đến trải nghiệm hình ảnh 
+        <strong>gợi cảm nhưng không dung tục</strong>, phù hợp cho người yêu cái đẹp thực thụ.
+      </p>
+      <p class="text-center mt-2">
+        <span class="block text-pink-500 font-semibold">
+          🔥 Cập nhật mỗi ngày – Khám phá ngay hàng ngàn <strong>ảnh gái xinh hot nhất hôm nay!</strong>
+        </span>
+      </p>
+    </div>
+
+  <!-- ✅ Các trang khác -->
+  {{ else if .Description }}
+    <div class="hero-box text-gray-700 leading-relaxed text-base md:text-lg w-full mx-auto text-justify">
+      {{ .Description }}
+    </div>
+
+  {{ else if .Content }}
+    <div class="hero-box text-gray-700 leading-relaxed text-base md:text-lg w-full mx-auto text-justify">
+      {{ .Content }}
+    </div>
+
+  {{ else }}
+    <p class="text-gray-600 italic text-center mt-4">
+      Nơi lưu giữ vẻ đẹp gợi cảm và nghệ thuật – cập nhật mỗi ngày.
+    </p>
+  {{ end }}
+</section>
+
+<style>
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fadeIn { animation: fadeIn 1.3s ease-out forwards; }
+
+  #hero { max-width: 72rem; }
+
+  .hero-box {
+    background: #fff;
+    border: 1.5px solid #f9a8d4;
+    border-radius: 1rem;
+    padding: 20px 36px;
+    box-shadow: 0 4px 14px rgba(249, 168, 212, 0.25);
+    transition: all 0.3s ease;
+    text-align: justify;
+    line-height: 1.55;
+  }
+  .hero-box p {
+    margin-top: 0.35rem !important;
+    margin-bottom: 0.35rem !important;
+  }
+  .hero-box:hover {
+    border-color: #ec4899;
+    box-shadow: 0 6px 18px rgba(236, 72, 153, 0.3);
+    transform: translateY(-3px);
+  }
+  .hero-box strong { color: #d81b60; }
+</style>
+
+<!-- ✅ Typewriter Script -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const el = document.getElementById("typewriter");
+  const text = el.getAttribute("data-text") || document.title;
+  let i = 0;
+  function type() {
+    if (i < text.length) {
+      el.textContent += text.charAt(i);
+      i++;
+      setTimeout(type, 55);
+    }
+  }
+  type();
+});
+</script>

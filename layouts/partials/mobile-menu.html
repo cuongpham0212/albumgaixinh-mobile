@@ -1,0 +1,32 @@
+<nav id="mobileMenu">
+  <div class="menu-header">
+    <span>Danh mục</span>
+    <button id="menuClose" aria-label="Đóng menu">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <ul>
+    {{ range .Site.Menus.main }}
+      <li class="{{ if .HasChildren }}has-submenu{{ end }}">
+        <div class="menu-item">
+          <a href="{{ .URL }}">{{ .Name }}</a>
+          {{ if .HasChildren }}
+            <button class="submenu-toggle" aria-label="Mở submenu">
+              <i class="fas fa-chevron-down"></i>
+            </button>
+          {{ end }}
+        </div>
+        {{ if .HasChildren }}
+          <ul class="submenu">
+            {{ range .Children }}
+              <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+            {{ end }}
+          </ul>
+        {{ end }}
+      </li>
+    {{ end }}
+  </ul>
+</nav>
+
+<div id="menuOverlay"></div>

@@ -1,0 +1,69 @@
+{{/* layouts/partials/affiliate_blocks.html (tối ưu cho cả desktop & mobile) */}}
+
+{{ $blocks := slice
+  (dict "text" "💋 Váy ren body gợi cảm, đang giảm giá 50% trên Shopee!"
+         "link" "https://shopee.vn/product/1"
+         "image" "https://cf.shopee.vn/file/sg-11134201-23010-dtpsm1a9cvov3f_tn")
+  (dict "text" "🔥 Bộ đồ ngủ satin siêu mềm mại, sexy vừa đủ!"
+         "link" "https://shopee.vn/product/2"
+         "image" "https://cf.shopee.vn/file/sg-11134201-7r9dy-lvux3t7j7ibk5f_tn")
+  (dict "text" "✨ Áo croptop lookbook phong cách Hàn Quốc cực xinh!"
+         "link" "https://shopee.vn/product/3"
+         "image" "https://cf.shopee.vn/file/sg-11134201-23010-5z3x8xvm2dov8a_tn")
+  (dict "text" "👗 Váy hoa vintage dịu dàng cho nàng yêu phong cách retro!"
+         "link" "https://shopee.vn/product/4"
+         "image" "https://cf.shopee.vn/file/sg-11134201-23010-sd8nl1v35xov0b_tn")
+  (dict "text" "🌸 Bộ bikini 2 mảnh gợi cảm, hot trend 2025!"
+         "link" "https://shopee.vn/product/5"
+         "image" "https://cf.shopee.vn/file/sg-11134201-23020-fx9v1sm4gwov6c_tn")
+  (dict "text" "💫 Áo sơ mi voan mỏng nhẹ, phối jean cực cuốn!"
+         "link" "https://shopee.vn/product/6"
+         "image" "https://cf.shopee.vn/file/sg-11134201-23010-gy3x3dn9gyov4d_tn")
+  (dict "text" "🔥 Đầm trễ vai quyến rũ, dành cho buổi hẹn hò đặc biệt!"
+         "link" "https://shopee.vn/product/7"
+         "image" "https://cf.shopee.vn/file/sg-11134201-23010-7u2dv1f6hyov1e_tn")
+  (dict "text" "👠 Giày cao gót nữ thanh lịch – phối váy cực chuẩn!"
+         "link" "https://shopee.vn/product/8"
+         "image" "https://cf.shopee.vn/file/sg-11134201-23020-3f1z5lx7nwov2f_tn")
+  (dict "text" "🎀 Váy ngủ ren mềm, phối nơ cực yêu – sale 45%!"
+         "link" "https://shopee.vn/product/9"
+         "image" "https://cf.shopee.vn/file/sg-11134201-23010-hf8q9cy5hvov5g_tn")
+  (dict "text" "🛍️ Áo len croptop mùa thu, phong cách lookbook nhẹ nhàng!"
+         "link" "https://shopee.vn/product/10"
+         "image" "https://cf.shopee.vn/file/sg-11134201-23010-5t8e6zsm4zov0h_tn")
+}}
+
+{{ $rand := int (math.Floor (mul (math.Rand) (len $blocks))) }}
+{{ $block := index $blocks $rand }}
+
+<!-- 🛍️ BLOCK AFFILIATE SHOPEE -->
+<div class="affiliate-card bg-white border border-pink-200 rounded-2xl shadow-sm p-3 mb-4
+            flex flex-col justify-between items-center text-center transition-transform duration-300 hover:-translate-y-0.5 hover:shadow-md">
+
+  <a href="{{ $block.link }}" target="_blank" rel="nofollow noopener" class="block w-full group">
+    <div class="aspect-[4/5] w-full overflow-hidden rounded-xl mb-3">
+      <img src="{{ $block.image }}" 
+           alt="Sản phẩm Shopee"
+           loading="lazy"
+           class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+    </div>
+
+    <p class="text-sm sm:text-base text-gray-700 leading-snug mb-2 px-2">
+      {{ $block.text }}
+    </p>
+
+    <span class="inline-block px-4 py-2 bg-gradient-to-r from-pink-600 to-orange-500 
+                 text-white rounded-full text-xs sm:text-sm font-semibold hover:from-orange-600 hover:to-pink-600 transition-all duration-300 shadow-md">
+      👉 Xem trên Shopee
+    </span>
+  </a>
+</div>
+
+<style>
+  /* 👇 Tối ưu cảm giác “ăn layout” như ảnh */
+  .affiliate-card {
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>

@@ -1,0 +1,194 @@
+{{ define "main" }}
+<div class="container mx-auto px-4">
+
+  <!-- Hero -->
+  {{ partial "hero.html" . }}
+
+  <!-- Summary -->
+  {{ with .Summary }}
+    <div class="summary-box max-w-5xl mx-auto bg-gray-50 border border-gray-200 rounded-2xl p-5 mt-4 mb-6 shadow-sm text-gray-700 text-justify leading-relaxed">
+      {{ . | safeHTML }}
+    </div>
+  {{ end }}
+
+  {{/* ============================
+       1) Tìm parent section mạnh mẽ
+       ============================ */}}
+  {{ $parent := .CurrentSection }}
+  {{ if not $parent }}
+    {{/* Thử GetPage theo đường cố định */}}
+    {{ $parent = site.GetPage "section" "anh-gai-xinh" }}
+  {{ end }}
+
+  {{/* ============================
+       2) Nếu có parent và sections con → dùng trực tiếp
+       ============================ */}}
+  {{ if and $parent (gt (len $parent.Sections) 0) }}
+    {{ range $parent.Sections }}
+      <section class="mb-8">
+        <div class="flex justify-center mb-5">
+          <h2 class="country-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+        </div>
+
+        <div class="album-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          {{ if gt (len .Pages) 0 }}
+            {{ range first 5 .Pages.ByDate.Reverse }}
+              {{/* album card (giữ nguyên cấu trúc) */}}
+              <div class="album-card bg-white rounded-2xl overflow-hidden shadow-md transition-transform duration-300 hover:shadow-xl hover:-translate-y-1">
+                <a href="{{ .RelPermalink }}" class="block">
+                  {{ $imgs := or .Params.thumbs .Params.images }}
+                  {{ if not $imgs }}{{ $imgs = .Resources.ByType "image" }}{{ end }}
+                  {{ if and $imgs (gt (len $imgs) 0) }}
+                    {{ $first := index $imgs 0 }}
+                    {{ $src := "" }}
+                    {{ if (printf "%T" $first | strings.Contains "string") }}
+                      {{ $src = $first }}
+                    {{ else }}
+                      {{ $src = $first.RelPermalink }}
+                    {{ end }}
+                    <img src="{{ $src }}" alt="{{ .Title }}" class="w-full h-[210px] object-cover" loading="lazy">
+                    <p class="text-center mt-1 text-xs text-gray-600">{{ len $imgs }} ảnh</p>
+                  {{ else }}
+                    <img src="{{ "images/cover.jpg" | absURL }}" alt="{{ .Title }}" class="w-full h-[210px] object-cover" loading="lazy">
+                    <p class="text-center mt-1 text-xs text-gray-600">0 ảnh</p>
+                  {{ end }}
+                </a>
+                <div class="album-info text-center p-2">
+                  <h3 class="font-semibold text-sm md:text-base text-gray-800 hover:text-pink-600 transition">
+                    <a href="{{ .RelPermalink }}" class="hover:underline">{{ .Title }}</a>
+                  </h3>
+                </div>
+              </div>
+            {{ end }}
+          {{ else }}
+            <p class="text-gray-500 text-sm text-center">Chưa có bài viết.</p>
+          {{ end }}
+        </div>
+      </section>
+    {{ end }}
+
+  {{ else }}
+    {{/* ============================
+         3) FALLBACK: tự tạo "sections" từ pages
+         - Gom các pages có Section cha là 'anh-gai-xinh'
+         - Lấy tên nhóm (ví dụ: 'trung-quoc') và tạo nhóm hiển thị
+         ============================ */}}
+
+    {{/* Lấy tất cả trang trong site mà Section (first-level) = anh-gai-xinh hoặc có prefix 'anh-gai-xinh/' */}}
+    {{ $all := where site.RegularPages "Params" "ne" nil }} {{/* start with all pages */}}
+    {{/* Filter những page có đường dẫn chứa /anh-gai-xinh/ */}}
+    {{ $byParent := where $all "File.Path" "match" "^content/anh-gai-xinh/" }}
+
+    {{/* Nếu vẫn rỗng, thử lấy all pages có Section = anh-gai-xinh (nếu pages tổ chức khác) */}}
+    {{ if eq (len $byParent) 0 }}
+      {{ $byParent = where $all "Section" "anh-gai-xinh" }}
+    {{ end }}
+
+    {{ if gt (len $byParent) 0 }}
+      {{/* Group theo phần tiếp theo sau anh-gai-xinh (lấy từ .File.Dir) */}}
+      {{ $groups := dict }}
+      {{ range $byParent }}
+        {{ $dir := .File.Dir | replaceRE "^content/|" "" }} {{/* ex: anh-gai-xinh/trung-quoc/ */}}
+        {{ $parts := split $dir "/" }}
+        {{ $sub := "" }}
+        {{ if ge (len $parts) 2 }}
+          {{ $sub = index $parts 1 }} {{/* phần thứ 2 => trung-quoc */}}
+        {{ else }}
+          {{/* fallback: lấy Section nếu không tách được */}}
+          {{ $sub = .Section }}
+        {{ end }}
+        {{ if not (eq $sub "") }}
+          {{/* khởi tạo danh sách nếu chưa có */}}
+          {{ $existing := index $groups $sub }}
+        {{ if not $existing }}
+          {{ $groups = merge $groups (dict $sub (slice)) }}
+          {{ $existing = index $groups $sub }}
+      {{ end }}
+        {{ $groups = merge $groups (dict $sub (append $existing .)) }}
+        {{ end }}
+      {{ end }}
+
+      {{/* Hiển thị theo thứ tự key trong groups */}}
+      {{ range $k, $v := $groups }}
+        <section class="mb-8">
+          <div class="flex justify-center mb-5">
+            <h2 class="country-title">
+              <a href="/anh-gai-xinh/{{ $k }}/">{{ humanize $k }}</a>
+            </h2>
+          </div>
+
+          <div class="album-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {{ if gt (len $v) 0 }}
+              {{ range first 5 (sort $v "Date" "desc") }}
+                <div class="album-card bg-white rounded-2xl overflow-hidden shadow-md transition-transform duration-300 hover:shadow-xl hover:-translate-y-1">
+                  <a href="{{ .RelPermalink }}" class="block">
+                    {{ $imgs := or .Params.thumbs .Params.images }}
+                    {{ if not $imgs }}{{ $imgs = .Resources.ByType "image" }}{{ end }}
+                    {{ if and $imgs (gt (len $imgs) 0) }}
+                      {{ $first := index $imgs 0 }}
+                      {{ $src := "" }}
+                      {{ if (printf "%T" $first | strings.Contains "string") }}
+                        {{ $src = $first }}
+                      {{ else }}
+                        {{ $src = $first.RelPermalink }}
+                      {{ end }}
+                      <img src="{{ $src }}" alt="{{ .Title }}" class="w-full h-[210px] object-cover" loading="lazy">
+                      <p class="text-center mt-1 text-xs text-gray-600">{{ len $imgs }} ảnh</p>
+                    {{ else }}
+                      <img src="{{ "images/cover.jpg" | absURL }}" alt="{{ .Title }}" class="w-full h-[210px] object-cover" loading="lazy">
+                      <p class="text-center mt-1 text-xs text-gray-600">0 ảnh</p>
+                    {{ end }}
+                  </a>
+                  <div class="album-info text-center p-2">
+                    <h3 class="font-semibold text-sm md:text-base text-gray-800 hover:text-pink-600 transition">
+                      <a href="{{ .RelPermalink }}" class="hover:underline">{{ .Title }}</a>
+                    </h3>
+                  </div>
+                </div>
+              {{ end }}
+            {{ else }}
+              <p class="text-gray-500 text-sm text-center">Chưa có bài viết.</p>
+            {{ end }}
+          </div>
+        </section>
+      {{ end }}
+
+    {{ else }}
+      <!-- Debug warning nếu không tìm thấy gì -->
+      <div class="text-center text-red-600 py-10">
+        ⚠️ Không tìm thấy mục con cho <strong>/anh-gai-xinh/</strong>. Vui lòng kiểm tra: <br>
+        - Các thư mục con cần có <code>_index.md</code> hoặc không chứa ký tự lạ trong tên. <br>
+        - Không tồn tại cả <code>index.md</code> trùng lẫn <code>_index.md</code>.
+      </div>
+    {{ end }}
+
+  {{ end }}
+
+  <!-- SEO rest content -->
+  {{ $rest := replace .Content .Summary "" }}
+  {{ $rest = replaceRE `(?i)<!--more-->` "" $rest }}
+  {{ with $rest }}
+    <div class="mt-10">
+      <div class="max-w-6xl mx-auto bg-gray-50 border border-gray-200 rounded-2xl p-6 prose text-gray-700 text-justify leading-relaxed shadow-sm">
+        {{ . | safeHTML }}
+      </div>
+    </div>
+  {{ end }}
+
+</div>
+
+<!-- CSS giữ nguyên -->
+<style>
+  .summary-box { font-size:1rem; line-height:1.7rem; }
+  .summary-box p { margin-bottom:.5rem; }
+  .album-card { background:#fff; border-radius:1rem; overflow:hidden; transition:transform .25s ease, box-shadow .25s ease; }
+  .album-card:hover{ transform:translateY(-3px); box-shadow:0 6px 12px rgba(0,0,0,.08); }
+  .album-card img{ width:100%; height:200px; object-fit:cover; }
+  .album-info h3{ color:#333; font-weight:600; }
+  .country-title{ display:inline-block; background:linear-gradient(135deg,#fbcfe8,#f472b6); color:#9d174d; font-weight:700; font-size:1.3rem; border-radius:9999px; padding:.4rem 1.5rem; border:1px solid #f9a8d4; box-shadow:0 3px 6px rgba(0,0,0,.05); transition:all .3s ease; text-transform:capitalize; }
+  .country-title a{text-decoration:none;color:inherit;}
+  .country-title:hover{ transform:translateY(-2px); background:linear-gradient(135deg,#f9a8d4,#ec4899); color:#fff; box-shadow:0 4px 10px rgba(236,72,153,.3); }
+  .prose p{ text-align:justify; text-justify:inter-word; margin-bottom:.75rem; }
+  @media (min-width:1024px){ .prose{ max-width:68rem; } }
+</style>
+{{ end }}

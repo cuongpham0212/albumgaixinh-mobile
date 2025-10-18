@@ -1,0 +1,137 @@
+{{ $related := first 10 (shuffle (where site.RegularPages "Section" "anh-gai-xinh")) }}
+{{ if gt (len $related) 0 }}
+<section class="mt-4 mb-8 px-2 relative">
+  <div class="flex justify-center mb-4">
+    <h2 class="related-title text-center px-5 py-2 border border-pink-300 rounded-full text-gray-900 font-semibold bg-white shadow-sm">
+      📸 Bài viết liên quan
+    </h2>
+  </div>
+
+  <div class="relative overflow-hidden max-w-full mx-auto py-2">
+    <!-- Track chứa các bài -->
+    <div id="carousel-track" class="flex transition-transform duration-500 ease-in-out touch-pan-x">
+      {{ range $related }}
+      <article
+        class="album-card bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-[2px] hover:shadow-md hover:border-pink-400 flex-shrink-0 min-w-[50%] px-1">
+        <a href="{{ .RelPermalink }}">
+          {{ $imgs := or .Params.thumbs .Params.images }}
+          {{ if not $imgs }}{{ $imgs = .Resources.ByType "image" }}{{ end }}
+          {{ if and $imgs (gt (len $imgs) 0) }}
+            {{ $first := index $imgs 0 }}
+            {{ if (printf "%T" $first | strings.Contains "string") }}
+              <img src="{{ $first }}" alt="{{ .Title }}" class="w-full h-[150px] object-cover" loading="lazy">
+            {{ else }}
+              <img src="{{ $first.RelPermalink }}" alt="{{ .Title }}" class="w-full h-[150px] object-cover" loading="lazy">
+            {{ end }}
+          {{ else }}
+            <img src="{{ "images/cover.jpg" | absURL }}" alt="{{ .Title }}" class="w-full h-[150px] object-cover" loading="lazy">
+          {{ end }}
+        </a>
+        <div class="album-info text-center p-2">
+          <h3 class="font-semibold text-sm text-gray-800 hover:text-pink-600 transition">
+            <a href="{{ .RelPermalink }}" class="hover:underline">{{ .Title }}</a>
+          </h3>
+        </div>
+      </article>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const track = document.getElementById("carousel-track");
+  const slides = Array.from(track.children);
+
+  let currentIndex = 0;
+  const slidesPerView = 2;
+  const totalSlides = slides.length;
+  let slideWidth = slides[0].getBoundingClientRect().width;
+  let autoSlideInterval;
+
+  // Set vị trí ban đầu
+  const setSlidePositions = () => {
+    slideWidth = slides[0].getBoundingClientRect().width;
+    slides.forEach((slide, i) => {
+      slide.style.left = `${i * slideWidth}px`;
+    });
+  };
+
+  const moveToSlide = (index) => {
+    track.style.transform = `translateX(-${index * slideWidth}px)`;
+    currentIndex = index;
+  };
+
+  // Vuốt cảm ứng
+  let startX = 0;
+  let isDragging = false;
+
+  track.addEventListener("touchstart", (e) => {
+    startX = e.touches[0].clientX;
+    isDragging = true;
+    stopAutoSlide();
+  });
+
+  track.addEventListener("touchmove", (e) => {
+    if (!isDragging) return;
+    const diff = startX - e.touches[0].clientX;
+    if (diff > 50) {
+      // Vuốt trái -> next
+      if (currentIndex < totalSlides - slidesPerView) {
+        moveToSlide(currentIndex + 1);
+      } else {
+        moveToSlide(0);
+      }
+      isDragging = false;
+    } else if (diff < -50) {
+      // Vuốt phải -> prev
+      if (currentIndex > 0) {
+        moveToSlide(currentIndex - 1);
+      } else {
+        moveToSlide(totalSlides - slidesPerView);
+      }
+      isDragging = false;
+    }
+  });
+
+  track.addEventListener("touchend", () => {
+    isDragging = false;
+    startAutoSlide();
+  });
+
+  // Auto slide
+  const startAutoSlide = () => {
+    autoSlideInterval = setInterval(() => {
+      if (currentIndex < totalSlides - slidesPerView) {
+        moveToSlide(currentIndex + 1);
+      } else {
+        moveToSlide(0);
+      }
+    }, 4000);
+  };
+
+  const stopAutoSlide = () => clearInterval(autoSlideInterval);
+
+  // Responsive khi resize
+  window.addEventListener("resize", () => {
+    setSlidePositions();
+    moveToSlide(0);
+  });
+
+  setSlidePositions();
+  startAutoSlide();
+});
+</script>
+
+<style>
+#carousel-track > article {
+  min-width: 50%;
+}
+
+@media (min-width: 768px) {
+  #carousel-track > article {
+    min-width: 25%;
+  }
+}
+</style>
+{{ end }}
