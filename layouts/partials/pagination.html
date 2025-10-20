@@ -1,26 +1,57 @@
-{{ if . }}
-  {{ $p := . }}
-  <div class="pagination-container">
-    <!-- Previous Button -->
-    {{ if gt $p.PageNumber 1 }}
-      <a href="{{ $p.Prev.URL }}" class="page-btn prev-btn">← Trước</a>
+{{ if gt .TotalPages 1 }}
+  <nav class="pagination-wrapper flex justify-center mt-12 mb-12 space-x-3 text-lg font-medium select-none">
+    {{ with .Prev }}
+      <a href="{{ .URL }}" class="page-btn bg-gradient-to-r from-pink-100 to-pink-200 text-gray-700 hover:from-pink-300 hover:to-pink-400 hover:text-white shadow-sm hover:shadow-md">
+        ← Trước
+      </a>
     {{ end }}
 
-    <!-- Page Numbers -->
-    <div class="page-numbers">
-      {{ range $i, $page := seq 1 $p.TotalPages }}
-        {{ if eq $i $p.PageNumber }}
-          <span class="page-number active">{{ $i }}</span>
-        {{ else }}
-          {{ $pageURL := (cond (eq $i 1) $p.First.URL (printf "%s/page/%d/" $p.First.URL $i)) }}
-          <a href="{{ $pageURL }}" class="page-number">{{ $i }}</a>
-        {{ end }}
+    {{ range .Pagers }}
+      {{ if eq . .Paginator }}
+        <span class="page-btn-active bg-gradient-to-r from-pink-500 to-pink-600 text-white shadow-md">
+          {{ .PageNumber }}
+        </span>
+      {{ else }}
+        <a href="{{ .URL }}" class="page-btn bg-gradient-to-r from-pink-100 to-pink-200 text-gray-700 hover:from-pink-300 hover:to-pink-400 hover:text-white shadow-sm hover:shadow-md">
+          {{ .PageNumber }}
+        </a>
       {{ end }}
-    </div>
-
-    <!-- Next Button -->
-    {{ if lt $p.PageNumber $p.TotalPages }}
-      <a href="{{ $p.Next.URL }}" class="page-btn next-btn">Sau →</a>
     {{ end }}
-  </div>
+
+    {{ with .Next }}
+      <a href="{{ .URL }}" class="page-btn bg-gradient-to-r from-pink-100 to-pink-200 text-gray-700 hover:from-pink-300 hover:to-pink-400 hover:text-white shadow-sm hover:shadow-md">
+        Sau →
+      </a>
+    {{ end }}
+  </nav>
+
+  <style>
+    .pagination-wrapper {
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+    .page-btn, .page-btn-active {
+      display: inline-block;
+      min-width: 3rem;
+      padding: 0.5rem 1.1rem;
+      border-radius: 9999px;
+      text-align: center;
+      transition: all .25s ease;
+      font-weight: 500;
+      line-height: 1.4rem;
+    }
+    .page-btn:hover {
+      transform: translateY(-2px);
+    }
+    .page-btn-active {
+      transform: scale(1.05);
+    }
+    @media (max-width: 640px) {
+      .page-btn, .page-btn-active {
+        min-width: 2.5rem;
+        padding: 0.45rem 0.9rem;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
 {{ end }}
