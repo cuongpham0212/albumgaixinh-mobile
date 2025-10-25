@@ -1,8 +1,6 @@
 ---
 title: "Ảnh gái xinh"
 description: "Tuyển chọn ảnh gái xinh sexy, gợi cảm nhất: bikini, nội y, ảnh nghệ thuật. Bộ sưu tập album đầy đủ, theo concept từ đời thường đến nude tinh tế."
-layout: "list"
-type: "anh-gai-xinh"
 ---
 
 # Ảnh Gái Xinh – Những Bộ Sưu Tập Sexy Gợi Cảm Hot Nhất
