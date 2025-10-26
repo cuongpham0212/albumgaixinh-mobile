@@ -7,18 +7,52 @@
   {{ if gt (len .) 0 }}
     <div class="text-center mt-10">
       <button id="unlock-nude-btn"
-              class="w-11/12 max-w-sm py-4 text-lg font-semibold text-white rounded-3xl bg-gradient-to-r from-pink-600 to-red-600 shadow-lg hover:from-red-600 hover:to-pink-500 transition-transform duration-300 transform active:scale-95">
+              class="w-11/12 max-w-sm py-4 text-lg font-semibold text-white rounded-3xl bg-gradient-to-r from-pink-600 to-red-600 shadow-lg hover:from-red-600 hover:to-pink-500 transition-transform duration-300 transform active:scale-95 animate-glow">
         💋 Mở album nude (xem quảng cáo 10s)
       </button>
     </div>
-<!-- ✅ Phần cảm ơn: thêm id để làm điểm cuộn sau khi quay lại -->
-    
+
+    <!-- ⚠️ Overlay cảnh báo 18+ -->
+    <div id="overlay-18plus" style="display:none;" class="fixed inset-0 z-[9999] bg-black bg-opacity-95 flex flex-col items-center justify-center text-white px-4 text-center">
+      <h2 class="text-2xl font-bold mb-2">⚠️ Cảnh báo nội dung 18+</h2>
+      <p class="text-sm text-gray-300 mb-4 max-w-xs">Bộ ảnh này có thể chứa hình ảnh gợi cảm, chỉ dành cho người đủ 18 tuổi trở lên.</p>
+
+      <div id="ad-section" class="w-full max-w-sm border border-pink-500 rounded-xl p-2 mb-3">
+        {{ partial "affiliate_blocks.html" . }}
+      </div>
+
+      <div id="ad-timer" class="text-lg my-3">
+        Quảng cáo đang chạy... vui lòng chờ <span id="countdown">10</span> giây 💋
+      </div>
+
+      <div id="confirmWrapper"></div>
+
+      <p class="mt-4 text-xs text-gray-400">(Lần sau trong cùng phiên truy cập sẽ không hỏi lại)</p>
+    </div>
+
     <style>
       #unlock-nude-btn { animation: glowPulse 2.5s ease-in-out infinite; }
       @keyframes glowPulse {
         0% { box-shadow: 0 0 0 rgba(255, 77, 109, 0.6); }
         50% { box-shadow: 0 0 16px rgba(255, 77, 109, 0.6); }
         100% { box-shadow: 0 0 0 rgba(255, 77, 109, 0.6); }
+      }
+
+      #confirmWrapper button {
+        background: linear-gradient(to right, #e91e63, #ff4d6d);
+        color: #fff;
+        border: none;
+        padding: 12px 28px;
+        border-radius: 9999px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 14px rgba(255,77,109,0.4);
+      }
+
+      #confirmWrapper button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 22px rgba(255,77,109,0.6);
       }
     </style>
 
@@ -36,6 +70,64 @@
           {{ end }}
         ]
       }
+    </script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const unlockBtn = document.getElementById("unlock-nude-btn");
+      const overlay = document.getElementById("overlay-18plus");
+      const countdownElem = overlay?.querySelector("#countdown");
+      const confirmWrapper = overlay?.querySelector("#confirmWrapper");
+      const adSection = overlay?.querySelector("#ad-section");
+      const slug = window.location.pathname.replace(/\/+$/, "");
+      const adShownKey = "nude_ad_shown:" + slug;
+      const sessionConfirmed = sessionStorage.getItem("adult_confirmed") === "true";
+      const adShown = sessionStorage.getItem(adShownKey) === "true";
+      const hasUnlockParam = new URLSearchParams(window.location.search).get("unlock") === "1";
+
+      if (!unlockBtn) return;
+
+      function startCountdown() {
+        if (!overlay.dataset.adLoaded) {
+          overlay.dataset.adLoaded = "true";
+          const script = document.createElement("script");
+          script.src = "//pl27755613.revenuecpmgate.com/14/6a/67/146a67a2abc2c71f2e2e007b32802a2d.js";
+          script.async = true;
+          adSection.appendChild(script);
+        }
+        let sec = 10;
+        const timer = setInterval(() => {
+          sec--;
+          if (sec >= 0 && countdownElem) countdownElem.textContent = sec;
+          if (sec <= 0) { clearInterval(timer); showConfirmButton(); }
+        }, 1000);
+      }
+
+      function showConfirmButton() {
+        if (!sessionConfirmed) {
+          confirmWrapper.innerHTML = `<button id="confirmBtn">Tôi đủ 18 tuổi, vào xem album 💋</button>`;
+          const btn = document.getElementById("confirmBtn");
+          btn.onclick = () => {
+            sessionStorage.setItem("adult_confirmed","true");
+            const url = new URL(window.location.href);
+            url.searchParams.set("unlock","1");
+            window.location.href = url.toString();
+          };
+        } else {
+          confirmWrapper.innerHTML = `<div class="text-sm opacity-80">✅ Quảng cáo hoàn tất! Đang mở album...</div>`;
+          sessionStorage.setItem(adShownKey,"true");
+          setTimeout(()=>{ overlay.classList.add("hidden"); },600);
+        }
+      }
+
+      // Nếu đã xác nhận 18+, bỏ overlay
+      if (hasUnlockParam || adShown) overlay.classList.add("hidden");
+
+      unlockBtn.addEventListener("click", function() {
+        overlay.classList.remove("hidden");
+        startCountdown();
+      });
+    });
     </script>
   {{ end }}
 {{ end }}

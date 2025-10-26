@@ -4,7 +4,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const params = new URLSearchParams(window.location.search);
   const isUnlocked = params.get("unlock") === "1";
+  const unlockBtn = document.getElementById("unlock-nude-btn");
+  const overlay = document.getElementById("overlay-18plus");
+  const countdownElem = overlay?.querySelector("#countdown");
+  const confirmWrapper = overlay?.querySelector("#confirmWrapper");
+  const adSection = overlay?.querySelector("#ad-section");
 
+  // ============================
+  // 🔹 Các hàm tiện ích
+  // ============================
   function withSingleUnlock(url) {
     const u = new URL(url, window.location.origin);
     u.searchParams.delete("unlock");
@@ -12,43 +20,66 @@ document.addEventListener("DOMContentLoaded", function () {
     return u.pathname + (u.search || "") + (u.hash || "");
   }
 
-  // ✅ Chỉ để lại đúng 1 dòng cảm ơn trong DOM
   function ensureThankSection() {
-    // Xoá toàn bộ phần tử trùng nếu có nhiều hơn 1
-    const allThanks = document.querySelectorAll("#thank-section");
-    if (allThanks.length > 1) {
-      allThanks.forEach((el, i) => { if (i > 0) el.remove(); });
-    }
-
+    document.querySelectorAll("#thank-section").forEach((el, i) => { if (i > 0) el.remove(); });
     let thank = document.getElementById("thank-section");
-    if (thank && document.body.contains(thank)) return thank;
-
+    if (thank) return thank;
     thank = document.createElement("p");
     thank.id = "thank-section";
     thank.className = "text-center text-xs text-gray-500 mt-3 italic";
     thank.textContent = "(Cảm ơn bạn đã ủng hộ website 💖)";
-
     const unlockBtn = document.getElementById("unlock-nude-btn");
     const wrapper = document.getElementById("nude-gallery-wrapper");
-    if (unlockBtn && unlockBtn.parentElement) {
-      unlockBtn.parentElement.insertAdjacentElement("afterend", thank);
-    } else if (wrapper && wrapper.parentElement) {
-      wrapper.parentElement.insertBefore(thank, wrapper);
-    } else {
-      document.body.appendChild(thank);
-    }
-
+    if (unlockBtn?.parentElement) unlockBtn.parentElement.insertAdjacentElement("afterend", thank);
+    else if (wrapper?.parentElement) wrapper.parentElement.insertBefore(thank, wrapper);
+    else document.body.appendChild(thank);
     return thank;
   }
 
-  function renderGallery() {
-    // ✅ Trước khi render, dọn sạch thank-section trùng ở sai vị trí
-    document.querySelectorAll("#thank-section").forEach((el, i) => {
-      const wrapper = document.getElementById("nude-gallery-wrapper");
-      if (!wrapper || !wrapper.parentElement.contains(el)) el.remove();
-      if (i > 0) el.remove();
-    });
+  // ============================
+  // 🔹 Countdown + Overlay 18+
+  // ============================
+  function startAdCountdown() {
+    if (!overlay) return;
+    overlay.style.display = "flex";
+    overlay.classList.add("fadeIn");
 
+    // Nạp quảng cáo nếu chưa có
+    if (!overlay.dataset.adLoaded) {
+      overlay.dataset.adLoaded = "true";
+      const script = document.createElement("script");
+      script.src = "//pl27755613.revenuecpmgate.com/14/6a/67/146a67a2abc2c71f2e2e007b32802a2d.js";
+      script.async = true;
+      adSection?.appendChild(script);
+    }
+
+    let sec = 10;
+    const timer = setInterval(() => {
+      sec--;
+      if (countdownElem) countdownElem.textContent = sec;
+      if (sec <= 0) {
+        clearInterval(timer);
+        showConfirmButton();
+      }
+    }, 1000);
+  }
+
+  function showConfirmButton() {
+    if (!confirmWrapper) return;
+    confirmWrapper.innerHTML = `<button id="confirmBtn" class="mt-2">Tôi đủ 18 tuổi, vào xem album 💋</button>`;
+    const btn = document.getElementById("confirmBtn");
+    btn.addEventListener("click", () => {
+      sessionStorage.setItem("adult_confirmed", "true");
+      const url = new URL(window.location.href);
+      url.searchParams.set("unlock", "1");
+      window.location.href = url.toString();
+    });
+  }
+
+  // ============================
+  // 🔹 Render gallery nude sau unlock
+  // ============================
+  function renderGallery() {
     const dataEl = document.querySelector('script[id^="nude-data-"]');
     const wrapper = document.getElementById("nude-gallery-wrapper");
     if (!dataEl || !wrapper) return false;
@@ -57,10 +88,9 @@ document.addEventListener("DOMContentLoaded", function () {
       const json = JSON.parse(dataEl.textContent || "{}");
       if (!json || !Array.isArray(json.thumbs) || !Array.isArray(json.full)) return false;
 
-      const total = json.thumbs.length;
       wrapper.innerHTML = `
         <h2 class="text-lg font-semibold mt-8 mb-3 text-center text-gray-800">
-          Bộ ảnh nude (${total} ảnh)
+          Bộ ảnh nude (${json.thumbs.length} ảnh)
         </h2>
         <div class="grid grid-cols-2 gap-3 px-2">
           ${json.thumbs.map((thumb, i) => {
@@ -76,19 +106,10 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
       `;
 
-      if (typeof GLightbox !== "undefined") {
-        setTimeout(() => {
-          GLightbox({
-            selector: ".glightbox",
-            touchNavigation: true,
-            zoomable: true,
-            loop: true
-          });
-        }, 100);
-      }
+      initLightboxWithPinchZoom();
       return true;
     } catch (e) {
-      console.error("Lỗi parse JSON dữ liệu nude:", e);
+      console.error("❌ Lỗi parse JSON dữ liệu nude:", e);
       return false;
     }
   }
@@ -104,31 +125,93 @@ document.addEventListener("DOMContentLoaded", function () {
     requestAnimationFrame(() => setTimeout(tryScroll, 80));
   }
 
-  if (isUnlocked) {
-    const unlockBtn = document.getElementById("unlock-nude-btn");
-    if (unlockBtn) unlockBtn.style.display = "none";
+  // ============================
+  // 🔹 Logic unlock / overlay
+  // ============================
+  const slug = window.location.pathname.replace(/\/+$/, "");
+  const adShownKey = "nude_ad_shown:" + slug;
+  const sessionConfirmed = sessionStorage.getItem("adult_confirmed") === "true";
+  const adShown = sessionStorage.getItem(adShownKey) === "true";
 
-    // ✅ chỉ gọi 1 lần, và dọn trùng trước khi render
+  if (isUnlocked) {
+    overlay?.setAttribute("style", "display:none;");
+    if (unlockBtn) unlockBtn.style.display = "none";
     ensureThankSection();
     const ok = renderGallery();
     setTimeout(scrollToThank, ok ? 250 : 400);
-  }
-
-  const unlockBtn = document.getElementById("unlock-nude-btn");
-  if (unlockBtn) {
-    unlockBtn.addEventListener("click", function () {
+    sessionStorage.setItem(adShownKey, "true");
+  } else if (unlockBtn && !sessionConfirmed) {
+    unlockBtn.addEventListener("click", () => {
       unlockBtn.disabled = true;
       unlockBtn.innerText = "⏳ Đang mở quảng cáo...";
-
-      const current = new URL(window.location.href);
-      current.searchParams.delete("mobile");
-      const redirectPath = withSingleUnlock(current.pathname + current.search);
-
-      const wrapperUrl = new URL("/ad-wrapper/", window.location.origin);
-      wrapperUrl.searchParams.set("redirect", redirectPath);
-
-      window.location.href = wrapperUrl.href;
+      startAdCountdown();
     });
   }
+
+  // ===========================================================
+  // 📸 Nâng cấp GLightbox: zoom chụm ngón tay (pinch-zoom mượt)
+  // ===========================================================
+  function initLightboxWithPinchZoom() {
+    if (typeof GLightbox === "undefined") return;
+    const lightbox = GLightbox({
+      selector: ".glightbox",
+      touchNavigation: true,
+      zoomable: true,
+      loop: true,
+      closeOnOutsideClick: false
+    });
+
+    // Chờ DOM lightbox xuất hiện rồi gắn zoom
+    setTimeout(() => {
+      const zoomTargets = document.querySelectorAll(".gslide-image img");
+      zoomTargets.forEach(img => attachPinchZoom(img));
+    }, 600);
+  }
+
+  function attachPinchZoom(img) {
+    let scale = 1, lastScale = 1, startX = 0, startY = 0, currentX = 0, currentY = 0;
+    let active = false;
+    const container = img.closest(".gslide-image");
+    if (!container) return;
+
+    container.addEventListener("touchstart", e => {
+      if (e.touches.length === 2) {
+        active = true;
+        lastScale = scale;
+      } else if (e.touches.length === 1 && scale > 1) {
+        startX = e.touches[0].clientX - currentX;
+        startY = e.touches[0].clientY - currentY;
+      }
+    }, { passive: true });
+
+    container.addEventListener("touchmove", e => {
+      if (!active) return;
+
+      if (e.touches.length === 2) {
+        const dx = e.touches[0].clientX - e.touches[1].clientX;
+        const dy = e.touches[0].clientY - e.touches[1].clientY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (!container._lastDistance) container._lastDistance = distance;
+        const delta = distance / container._lastDistance;
+        scale = Math.min(Math.max(lastScale * delta, 1), 4);
+        img.style.transform = `scale(${scale}) translate(${currentX / scale}px, ${currentY / scale}px)`;
+      } else if (e.touches.length === 1 && scale > 1) {
+        currentX = e.touches[0].clientX - startX;
+        currentY = e.touches[0].clientY - startY;
+        img.style.transform = `scale(${scale}) translate(${currentX / scale}px, ${currentY / scale}px)`;
+      }
+    }, { passive: true });
+
+    container.addEventListener("touchend", e => {
+      if (scale <= 1.05) {
+        scale = 1; currentX = currentY = 0;
+        img.style.transform = "scale(1)";
+      }
+      container._lastDistance = null;
+      active = false;
+    });
+  }
+
+  if (document.querySelector(".glightbox")) initLightboxWithPinchZoom();
 });
 </script>
