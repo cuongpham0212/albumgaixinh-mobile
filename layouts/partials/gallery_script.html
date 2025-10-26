@@ -4,86 +4,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const params = new URLSearchParams(window.location.search);
   const isUnlocked = params.get("unlock") === "1";
+
   const unlockBtn = document.getElementById("unlock-nude-btn");
   const overlay = document.getElementById("overlay-18plus");
   const countdownElem = overlay?.querySelector("#countdown");
   const confirmWrapper = overlay?.querySelector("#confirmWrapper");
   const adSection = overlay?.querySelector("#ad-section");
+  const wrapper = document.getElementById("nude-gallery-wrapper");
+  const sessionConfirmed = sessionStorage.getItem("adult_confirmed") === "true";
 
-  // ============================
-  // 🔹 Các hàm tiện ích
-  // ============================
-  function withSingleUnlock(url) {
-    const u = new URL(url, window.location.origin);
-    u.searchParams.delete("unlock");
-    u.searchParams.set("unlock", "1");
-    return u.pathname + (u.search || "") + (u.hash || "");
-  }
-
-  function ensureThankSection() {
-    document.querySelectorAll("#thank-section").forEach((el, i) => { if (i > 0) el.remove(); });
-    let thank = document.getElementById("thank-section");
-    if (thank) return thank;
-    thank = document.createElement("p");
-    thank.id = "thank-section";
-    thank.className = "text-center text-xs text-gray-500 mt-3 italic";
-    thank.textContent = "(Cảm ơn bạn đã ủng hộ website 💖)";
-    const unlockBtn = document.getElementById("unlock-nude-btn");
-    const wrapper = document.getElementById("nude-gallery-wrapper");
-    if (unlockBtn?.parentElement) unlockBtn.parentElement.insertAdjacentElement("afterend", thank);
-    else if (wrapper?.parentElement) wrapper.parentElement.insertBefore(thank, wrapper);
-    else document.body.appendChild(thank);
-    return thank;
-  }
-
-  // ============================
-  // 🔹 Countdown + Overlay 18+
-  // ============================
-  function startAdCountdown() {
-    if (!overlay) return;
-    overlay.style.display = "flex";
-    overlay.classList.add("fadeIn");
-
-    // Nạp quảng cáo nếu chưa có
-    if (!overlay.dataset.adLoaded) {
-      overlay.dataset.adLoaded = "true";
-      const script = document.createElement("script");
-      script.src = "//pl27755613.revenuecpmgate.com/14/6a/67/146a67a2abc2c71f2e2e007b32802a2d.js";
-      script.async = true;
-      adSection?.appendChild(script);
-    }
-
-    let sec = 10;
-    const timer = setInterval(() => {
-      sec--;
-      if (countdownElem) countdownElem.textContent = sec;
-      if (sec <= 0) {
-        clearInterval(timer);
-        showConfirmButton();
-      }
-    }, 1000);
-  }
-
-  function showConfirmButton() {
-    if (!confirmWrapper) return;
-    confirmWrapper.innerHTML = `<button id="confirmBtn" class="mt-2">Tôi đủ 18 tuổi, vào xem album 💋</button>`;
-    const btn = document.getElementById("confirmBtn");
-    btn.addEventListener("click", () => {
-      sessionStorage.setItem("adult_confirmed", "true");
-      const url = new URL(window.location.href);
-      url.searchParams.set("unlock", "1");
-      window.location.href = url.toString();
-    });
-  }
-
-  // ============================
-  // 🔹 Render gallery nude sau unlock
-  // ============================
+  // =====================================================
+  // 🔹 Render gallery nude sau khi unlock
+  // =====================================================
   function renderGallery() {
     const dataEl = document.querySelector('script[id^="nude-data-"]');
-    const wrapper = document.getElementById("nude-gallery-wrapper");
     if (!dataEl || !wrapper) return false;
-
     try {
       const json = JSON.parse(dataEl.textContent || "{}");
       if (!json || !Array.isArray(json.thumbs) || !Array.isArray(json.full)) return false;
@@ -98,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return `
               <figure class="overflow-hidden rounded-lg shadow-md bg-white">
                 <a href="${full}" class="block glightbox" data-gallery="gallery-nude">
-                  <img src="${thumb}" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" loading="lazy" alt="Ảnh nude">
+                  <img src="${thumb}" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" loading="lazy" alt="Ảnh nude ${i+1}">
                 </a>
               </figure>
             `;
@@ -107,6 +42,12 @@ document.addEventListener("DOMContentLoaded", function () {
       `;
 
       initLightboxWithPinchZoom();
+
+      // 🔽 Auto scroll xuống album nude sau khi load
+      setTimeout(() => {
+        wrapper.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 800);
+
       return true;
     } catch (e) {
       console.error("❌ Lỗi parse JSON dữ liệu nude:", e);
@@ -114,43 +55,85 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  function scrollToThank() {
-    const thank = ensureThankSection();
-    let tries = 0;
-    const tryScroll = () => {
-      tries++;
-      thank.scrollIntoView({ behavior: "smooth", block: "center" });
-      if (tries < 6) setTimeout(tryScroll, 180);
-    };
-    requestAnimationFrame(() => setTimeout(tryScroll, 80));
+  // =====================================================
+  // 🔹 Countdown quảng cáo + xác nhận 18+
+  // =====================================================
+  function startAdCountdown() {
+    overlay.style.display = "flex";
+    overlay.classList.add("fadeIn");
+
+    if (!overlay.dataset.adLoaded) {
+      overlay.dataset.adLoaded = "true";
+      const script = document.createElement("script");
+      script.src = "//pl27755613.revenuecpmgate.com/14/6a/67/146a67a2abc2c71f2e2e007b32802a2d.js";
+      script.async = true;
+      adSection?.appendChild(script);
+    }
+
+    let sec = 10;
+    const timer = setInterval(() => {
+      sec--;
+      if (countdownElem) countdownElem.textContent = sec;
+      if (sec <= 0) {
+        clearInterval(timer);
+        if (!sessionConfirmed) {
+          showConfirmButton();
+        } else {
+          openGallery();
+        }
+      }
+    }, 1000);
   }
 
-  // ============================
-  // 🔹 Logic unlock / overlay
-  // ============================
-  const slug = window.location.pathname.replace(/\/+$/, "");
-  const adShownKey = "nude_ad_shown:" + slug;
-  const sessionConfirmed = sessionStorage.getItem("adult_confirmed") === "true";
-  const adShown = sessionStorage.getItem(adShownKey) === "true";
-
-  if (isUnlocked) {
-    overlay?.setAttribute("style", "display:none;");
-    if (unlockBtn) unlockBtn.style.display = "none";
-    ensureThankSection();
-    const ok = renderGallery();
-    setTimeout(scrollToThank, ok ? 250 : 400);
-    sessionStorage.setItem(adShownKey, "true");
-  } else if (unlockBtn && !sessionConfirmed) {
-    unlockBtn.addEventListener("click", () => {
-      unlockBtn.disabled = true;
-      unlockBtn.innerText = "⏳ Đang mở quảng cáo...";
-      startAdCountdown();
+  // =====================================================
+  // 🔹 Nút xác nhận 18+
+  // =====================================================
+  function showConfirmButton() {
+    confirmWrapper.innerHTML = `<button id="confirmBtn" class="mt-2 px-5 py-2 bg-gradient-to-r from-pink-600 to-red-600 text-white rounded-full shadow-md">Tôi đủ 18 tuổi, vào xem album 💋</button>`;
+    const btn = document.getElementById("confirmBtn");
+    btn.addEventListener("click", () => {
+      sessionStorage.setItem("adult_confirmed", "true");
+      openGallery();
     });
   }
 
-  // ===========================================================
-  // 📸 Nâng cấp GLightbox: zoom chụm ngón tay (pinch-zoom mượt)
-  // ===========================================================
+  // =====================================================
+  // 🔹 Mở gallery sau khi quảng cáo kết thúc
+  // =====================================================
+  function openGallery() {
+    overlay.classList.remove("fadeIn");
+    overlay.style.display = "none";
+    const url = new URL(window.location.href);
+    url.searchParams.set("unlock", "1");
+    window.location.href = url.toString();
+  }
+
+  // =====================================================
+  // 🔹 Nút mở album nude
+  // =====================================================
+  if (unlockBtn) {
+    unlockBtn.addEventListener("click", function () {
+      unlockBtn.disabled = true;
+      unlockBtn.innerText = "⏳ Đang mở quảng cáo...";
+      setTimeout(() => {
+        startAdCountdown();
+        unlockBtn.disabled = false;
+        unlockBtn.innerText = "💋 Mở album nude (xem quảng cáo 10s)";
+      }, 300);
+    });
+  }
+
+  // =====================================================
+  // 🔹 Khi có ?unlock=1 → render luôn album nude
+  // =====================================================
+  if (isUnlocked) {
+    overlay?.setAttribute("style", "display:none;");
+    renderGallery();
+  }
+
+  // =====================================================
+  // 📸 Pinch Zoom mượt (giữ như cũ)
+  // =====================================================
   function initLightboxWithPinchZoom() {
     if (typeof GLightbox === "undefined") return;
     const lightbox = GLightbox({
@@ -160,11 +143,9 @@ document.addEventListener("DOMContentLoaded", function () {
       loop: true,
       closeOnOutsideClick: false
     });
-
-    // Chờ DOM lightbox xuất hiện rồi gắn zoom
     setTimeout(() => {
-      const zoomTargets = document.querySelectorAll(".gslide-image img");
-      zoomTargets.forEach(img => attachPinchZoom(img));
+      const imgs = document.querySelectorAll(".gslide-image img");
+      imgs.forEach(img => attachPinchZoom(img));
     }, 600);
   }
 
@@ -176,8 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     container.addEventListener("touchstart", e => {
       if (e.touches.length === 2) {
-        active = true;
-        lastScale = scale;
+        active = true; lastScale = scale;
       } else if (e.touches.length === 1 && scale > 1) {
         startX = e.touches[0].clientX - currentX;
         startY = e.touches[0].clientY - currentY;
@@ -186,7 +166,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     container.addEventListener("touchmove", e => {
       if (!active) return;
-
       if (e.touches.length === 2) {
         const dx = e.touches[0].clientX - e.touches[1].clientX;
         const dy = e.touches[0].clientY - e.touches[1].clientY;
@@ -212,6 +191,5 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  if (document.querySelector(".glightbox")) initLightboxWithPinchZoom();
 });
 </script>
