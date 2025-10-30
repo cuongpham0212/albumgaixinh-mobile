@@ -1,17 +1,5 @@
-# =========================================================
-# ✅ Robots.txt – Phiên bản MOBILE (Album Gái Xinh)
-# =========================================================
 User-agent: *
 Allow: /
 
-# Sitemap (chỉ dùng nếu mobile vẫn build riêng)
-Sitemap: https://albumgaixinh-mobile.netlify.app/sitemap.xml
-
-# =========================================================
-# ✅ Liên kết song song Mobile ↔ Desktop (SEO hợp nhất)
-# =========================================================
-# Canonical (Desktop): https://albumgaixinh.netlify.app/
-# Alternate (Mobile):  https://albumgaixinh-mobile.netlify.app/
-
-# Phiên bản MOBILE này là bản giao diện song song của website chính.
-# Google sẽ dùng canonical trong HTML để gộp chỉ mục về bản desktop chính thức.
+# This is the mobile UI mirror
+# Canonical: https://albumgaixinh.netlify.app/

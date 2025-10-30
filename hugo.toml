@@ -73,20 +73,11 @@ staticDir  = ["static"]
 # ✅ OUTPUTS (tối ưu, không còn JSON API)
 # =====================================================
 [outputs]
-  home     = ["HTML", "SITEMAP"]
-  section  = ["HTML", "SITEMAP"]
+  home     = ["HTML",]
+  section  = ["HTML",]
   taxonomy = ["HTML"]
   term     = ["HTML"]
   page     = ["HTML"]
-
-# =====================================================
-# ✅ SITEMAP XML (gọn, nhẹ)
-# =====================================================
-[sitemap]
-  changefreq = "weekly"
-  priority   = 0.6
-  filename   = "sitemap.xml"
- 
 
 # =====================================================
 # ✅ MIME & HEADERS CHO NETLIFY
