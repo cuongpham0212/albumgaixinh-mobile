@@ -45,3 +45,12 @@
 
 <!-- ⚠️ Ghi chú: main.js đã được load trong baseof.html, 
      nên KHÔNG load lại ở đây để tránh trùng và lỗi render -->
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const lazyImgs = document.querySelectorAll("img[data-src]");
+  lazyImgs.forEach(img => {
+    img.src = img.dataset.src;
+  });
+});
+</script>
