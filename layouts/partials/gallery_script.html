@@ -1,3 +1,34 @@
+<style>
+#overlay-18plus {
+  position: fixed !important;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.92);
+  z-index: 999999 !important;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden !important;
+  pointer-events: auto !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+body.no-scroll {
+  overflow: hidden !important;
+  height: 100vh !important;
+  touch-action: none !important;
+  overscroll-behavior: none !important;
+  position: fixed !important;
+  width: 100%;
+}
+
+/* Chặn click nền mà vẫn cho click overlay */
+#overlay-18plus * { pointer-events: auto !important; }
+body.no-scroll * { pointer-events: none !important; }
+body.no-scroll #overlay-18plus { pointer-events: auto !important; }
+</style>
+
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
@@ -12,6 +43,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const adSection = overlay?.querySelector("#ad-section");
   const wrapper = document.getElementById("nude-gallery-wrapper");
   const sessionConfirmed = sessionStorage.getItem("adult_confirmed") === "true";
+
+  function lockBodyScroll() {
+  document.body.classList.add("no-scroll");
+  }
+  function unlockBodyScroll() {
+  document.body.classList.remove("no-scroll");
+  }
 
   // =====================================================
   // 🔹 Render gallery nude sau khi unlock
@@ -59,6 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // 🔹 Countdown quảng cáo + xác nhận 18+
   // =====================================================
   function startAdCountdown() {
+    lockBodyScroll(); // ✅ Cấm scroll ngay khi overlay bật
     overlay.style.display = "flex";
     overlay.classList.add("fadeIn");
 
@@ -83,6 +122,15 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
     }, 1000);
+
+    function lockBody() {
+    document.body.classList.add("modal-open");
+    }
+
+    function unlockBody() {
+    document.body.classList.remove("modal-open");
+    }
+
   }
 
   // =====================================================
@@ -101,6 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // 🔹 Mở gallery sau khi quảng cáo kết thúc
   // =====================================================
   function openGallery() {
+    unlockBodyScroll(); // ✅ Cho scroll lại sau 10s
     overlay.classList.remove("fadeIn");
     overlay.style.display = "none";
     const url = new URL(window.location.href);
@@ -112,6 +161,12 @@ document.addEventListener("DOMContentLoaded", function () {
   // 🔹 Nút mở album nude
   // =====================================================
   if (unlockBtn) {
+    // Ngăn back browser để tránh skip quảng cáo
+    history.pushState(null, "", location.href);
+    window.addEventListener("popstate", function () {
+    history.pushState(null, "", location.href);
+    });
+
     unlockBtn.addEventListener("click", function () {
       unlockBtn.disabled = true;
       unlockBtn.innerText = "⏳ Đang mở quảng cáo...";
@@ -193,3 +248,53 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 </script>
+<style>
+#overlay-18plus {
+  position: fixed !important;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999999 !important;
+  background: rgba(0,0,0,0.88);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden !important;
+  pointer-events: auto !important;
+  backdrop-filter: blur(4px);
+}
+
+/* Chặn click mọi thứ bên dưới */
+body.modal-open {
+  overflow: hidden !important;
+  height: 100vh;
+  touch-action: none;
+}
+</style>
+<style>
+#overlay-18plus {
+  position: fixed !important;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.92);
+  z-index: 999999 !important;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden !important;
+  pointer-events: auto !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* ✅ Khóa body scroll */
+body.no-scroll {
+  overflow: hidden !important;
+  height: 100vh !important;
+  touch-action: none !important;
+  overscroll-behavior: none !important;
+  position: fixed !important;
+  width: 100%;
+}
+</style>
