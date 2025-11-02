@@ -10,7 +10,7 @@
     <article class="prose mx-auto mb-6 text-justify leading-relaxed text-base">
       {{ .Content }}
     </article>
-
+    {{ partial "share-buttons.html" . }}
     <!-- ✅ Nếu trang có shortcode gallery (ảnh trong bài) -->
     {{ if .HasShortcode "cdn_gallery" }}
       {{ partial "shortcodes/cdn_gallery_mobile.html" . }}

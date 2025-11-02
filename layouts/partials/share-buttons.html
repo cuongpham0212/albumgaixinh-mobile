@@ -1,0 +1,171 @@
+{{/* ===============================
+   SAFE SHARE BUTTONS – HUGO ✅
+   - Auto preview OG/Twitter khi share
+   - Native Share API (iOS/Android)
+   - No jsEscape, no nil errors
+   - Full fallback tags/desc/thumb
+================================ */}}
+
+{{- $url := .Permalink -}}
+{{- $title := (or .Title .Site.Title) -}}
+{{- $desc := (or .Params.description .Site.Params.description "") -}}
+{{- $img := (or .Params.featuredImage .Site.Params.defaultImage) -}}
+
+{{/* ✅ SAFE TAGS */}}
+{{- $tags := "#gaixinh #hotgirl #albumgaixinh" -}}
+{{- with .Params.tags -}}
+  {{- $tags = printf "#%s" (delimit . " #") -}}
+{{- end -}}
+
+{{/* ✅ CAPTION (SAFE ESCAPE) */}}
+{{- $caption := printf "%s — %s\n%s\n%s\n%s" $title .Site.Title $desc $tags $url -}}
+
+<style>
+.agx-fab {
+  position:fixed;
+  right:14px;
+  bottom:70px; /* đẩy lên để không đụng nút Top */
+  z-index:999999; /* luôn nằm trên */
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:8px 12px;
+  background:#111;
+  color:#fff;
+  font:600 13px/1 system-ui;
+  border-radius:999px;
+  box-shadow:0 8px 24px rgba(0,0,0,.25);
+}
+.agx-fab svg{width:18px;height:18px;fill:currentColor}
+
+.agx-sheet {
+  position:fixed;left:0;right:0;bottom:0;
+  background:#fff;z-index:99998;
+  border-radius:18px 18px 0 0;
+  padding:16px;transform:translateY(102%);
+  transition:.25s;
+}
+.agx-sheet.open{transform:translateY(0)}
+
+.agx-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.55);
+  z-index:99997;opacity:0;pointer-events:none;transition:.2s;
+}
+.agx-overlay.open{opacity:1;pointer-events:all}
+
+.agx-title{font:700 14px system-ui;text-align:center;margin-bottom:6px}
+.agx-sub{font:400 11px system-ui;color:#666;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:12px}
+
+.agx-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.agx-item{text-align:center;font:600 11px system-ui;color:#111}
+.agx-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.agx-icon svg{width:20px;height:20px;fill:#fff}
+
+.agx-btn{
+  width:100%;padding:10px;margin-top:12px;
+  font:700 13px system-ui;border-radius:12px;
+  border:1px solid #ddd;background:#f4f4f5;
+}
+.agx-btn:active{transform:scale(.97)}
+</style>
+
+<!-- ✅ FLOATING BUTTON -->
+<button class="agx-fab" id="agx-fab">
+<svg viewBox="0 0 24 24"><path d="M18 8a3 3 0 10-2.83-4h-.01A3 3 0 0012 6c0 .22.03.44.08.65l-4.9 2.45a3 3 0 100 5.79l4.9 2.45c-.05.21-.08.43-.08.65a3 3 0 103.17-2.99l-4.9-2.45a3.1 3.1 0 000-1.8l4.9-2.45C16.86 7.84 17.41 8 18 8z"/></svg>
+Chia sẻ
+</button>
+
+<div id="agx-overlay" class="agx-overlay"></div>
+
+<div id="agx-sheet" class="agx-sheet">
+  <div class="agx-title">Chia sẻ bài viết</div>
+  <div class="agx-sub">{{ .Title }}</div>
+
+  <div class="agx-grid">
+    <!-- FB -->
+    <a class="agx-item" target="_blank"
+       href="https://www.facebook.com/sharer/sharer.php?u={{ $url | urlquery }}">
+      <div class="agx-icon" style="background:#1877F2">
+        <svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 10-11.5 9.9V15h-3v-3h3V9.7c0-2.2 1.3-3.5 3.3-3.5.9 0 1.8.1 1.8.1v2.6h-1.1c-1 0-1.3.6-1.3 1.2V12h2.6l-.4 3H14v6.9A10 10 0 0022 12z"/></svg>
+      </div>FB
+    </a>
+
+    <!-- Zalo -->
+    <a class="agx-item" target="_blank"
+       href="https://zalo.me/share?url={{ $url | urlquery }}">
+      <div class="agx-icon" style="background:#0068FF">
+        <svg viewBox="0 0 24 24"><text x="4" y="16" fill="#fff" font-size="11" font-weight="700">Zalo</text></svg>
+      </div>Zalo
+    </a>
+
+    <!-- X -->
+    <a class="agx-item" target="_blank"
+      href="https://twitter.com/intent/tweet?url={{ $url | urlquery }}&text={{ $title | urlquery }}">
+      <div class="agx-icon" style="background:#000">
+        <svg viewBox="0 0 1200 1227"><path d="M714 519L1160 0H1020L672 405 390 0H0L468 671 0 1227H150L516 810 828 1227H1200"/></svg>
+      </div>X
+    </a>
+
+    <!-- Telegram -->
+    <a class="agx-item" target="_blank"
+      href="https://t.me/share/url?url={{ $url | urlquery }}&text={{ $title | urlquery }}">
+      <div class="agx-icon" style="background:#229ED9">
+        <svg viewBox="0 0 24 24"><path d="M9.8 15.7l-.4 4 2.2-2.4 4.2 3.1c.9.6 2 .1 2.2-1l3.8-17.8c.2-1-.8-1.7-1.6-1.3L2.4 10.2c-1.1.4-1.1 2 .1 2.3l5.8 1.8 8.3-5.2-7 6.6z" fill="#fff"/></svg>
+      </div>TG
+    </a>
+  </div>
+
+  <button id="agx-copy" class="agx-btn">📎 Sao chép link</button>
+  <button id="agx-close" class="agx-btn" style="background:#fff">Đóng</button>
+</div>
+
+<script>
+(function(){
+  const url = `{{ $url }}`
+  const title = `{{ $title }}`
+  const desc = `{{ $desc }}`
+  const caption = `{{ $caption | replace "\n" "\\n" | replace "\"" "\\\"" }}`
+
+  const fab = document.querySelector('#agx-fab')
+  const sheet = document.querySelector('#agx-sheet')
+  const overlay = document.querySelector('#agx-overlay')
+  const close = document.querySelector('#agx-close')
+  const copy = document.querySelector('#agx-copy')
+
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+
+  async function tryNativeShare(){
+    if(isMobile && navigator.share){
+      try{
+        await navigator.share({ title, text: desc, url })
+        return true
+      }catch(e){ return false }
+    }
+    return false
+  }
+
+  fab.addEventListener('click', async ()=>{
+    const ok = await tryNativeShare()
+    if(!ok){
+      sheet.classList.add('open')
+      overlay.classList.add('open')
+      document.body.style.overflow='hidden'
+    }
+  })
+
+  function hide(){
+    sheet.classList.remove('open')
+    overlay.classList.remove('open')
+    document.body.style.overflow=''
+  }
+
+  overlay.addEventListener('click', hide)
+  close.addEventListener('click', hide)
+
+  copy.addEventListener('click', async ()=>{
+    await navigator.clipboard.writeText(url)
+    copy.textContent='✅ Đã sao chép'
+    setTimeout(()=>copy.textContent='📎 Sao chép link',1200)
+  })
+})();
+</script>
