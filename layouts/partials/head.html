@@ -28,8 +28,9 @@
 {{ if .Site.Params.isMobile }}
   <!-- ✅ Mobile canonical luôn về Desktop -->
   <link rel="canonical" href="{{ .Site.Params.desktopDomain }}{{ .RelPermalink }}">
+  <link rel="alternate" media="only screen and (max-width: 640px)" href="{{ .Permalink }}">
 {{ else }}
-  <!-- Desktop fallback (tránh lỗi nếu file bị dùng nhầm) -->
+  <!-- ✅ Nếu lỡ load bằng desktop settings -->
   <link rel="canonical" href="{{ .Permalink }}">
   <link rel="alternate" media="only screen and (max-width: 640px)" href="{{ .Site.Params.mobileDomain }}{{ .RelPermalink }}">
 {{ end }}
@@ -60,7 +61,7 @@
 <meta name="twitter:image" content="{{ with .Params.images }}{{ index . 0 }}{{ else }}{{ .Site.Params.defaultImage | absURL }}{{ end }}">
 
 <!-- ========================================================= -->
-<!-- ✅ Theo dõi quảng cáo (nếu cần tracking từ GA4 desktop) -->
+<!-- ✅ GA4 -->
 <!-- ========================================================= -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-VZWN6D3972"></script>
 <script>
@@ -69,8 +70,3 @@
   gtag('js', new Date());
   gtag('config', 'G-VZWN6D3972', { send_page_view: true });
 </script>
-
-<!-- ========================================================= -->
-<!-- ✅ Không cần redirect JS (mobile là đích đến) -->
-<!-- ========================================================= -->
-<!-- Desktop site sẽ tự redirect sang mobile khi phát hiện mobile device -->

@@ -1,12 +1,10 @@
 # =====================================================
-# ✅ NETLIFY CONFIG CHUẨN CHO HUGO WEBSITE (Mobile)
+# ✅ NETLIFY CONFIG — Mobile version (NO INDEX, NO REDIRECT)
 # =====================================================
 
 [build]
   publish = "public"
   command = "hugo --gc --minify --cleanDestinationDir"
-  # ⚙️ Không dùng serverless functions cho mobile
-  # functions = "functions"
 
 [build.environment]
   HUGO_VERSION = "0.149.0"
@@ -15,16 +13,13 @@
   TZ = "Asia/Ho_Chi_Minh"
 
 # =====================================================
-# ✅ HTTP HEADERS (SEO & Cache)
+# ✅ HTTP HEADERS
 # =====================================================
 
-# MIME chính xác cho sitemap.xml
-[[headers]]
-  for = "/sitemap.xml"
-  [headers.values]
-    Content-Type = "application/xml; charset=UTF-8"
+# 🚫 Mobile bản này KHÔNG có sitemap
+# → Không khai báo header cho /sitemap.xml
 
-# Cache kiểm soát (HTML không cache, asset cache dài)
+# Cache rules
 [[headers]]
   for = "/*"
   [headers.values]
@@ -43,13 +38,11 @@
     Cache-Control = "public, max-age=31536000, immutable"
 
 # =====================================================
-# ✅ REDIRECTS (song song với bản desktop)
+# ✅ REDIRECT RULES
 # =====================================================
 
-# Người dùng desktop truy cập mobile → tự quay về desktop
-[[redirects]]
-  from = "https://albumgaixinh-mobile.netlify.app/*"
-  to = "https://albumgaixinh.netlify.app/:splat"
-  status = 302
-  conditions = { Device = "desktop" }
-  force = true
+# 🚫 Không redirect mobile → desktop
+# 🚫 Không redirect desktop → mobile
+# 🚫 Không device detection redirect
+
+# (để trống — intentionally blank)

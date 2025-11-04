@@ -1,7 +1,7 @@
 # =====================================================
 # ✅ CẤU HÌNH CƠ BẢN
 # =====================================================
-baseURL = "https://albumgaixinh-mobile.netlify.app/"
+baseURL = "https://m.albumgaixinh.io.vn/"
 languageCode = "vi"
 title = "Album Gái Xinh (Mobile)"
 relativeURLs = false
@@ -34,22 +34,24 @@ contentDir = "content"
 staticDir  = ["static"]
 
 # =====================================================
-# ✅ SEO SONG SONG VỚI BẢN DESKTOP
+# ✅ SEO (Giữ mô hình CŨ: Mobile KHÔNG index)
+#     - canonicalDomain/desktopDomain trỏ về desktop mới
+#     - mobileDomain là subdomain m.
 # =====================================================
 [params]
   # ✅ Flag nhận diện mobile
   isMobile = true
 
-  # ✅ Mô tả & từ khóa
+  # ✅ Mô tả & từ khóa (giữ nguyên)
   description      = "Phiên bản mobile chính thức của Album Gái Xinh – giao diện tối ưu, tải nhanh, hình ảnh sắc nét."
   siteDescription  = "Album Gái Xinh – nơi bạn khám phá bộ sưu tập ảnh gái xinh nghệ thuật, dễ thương, sexy, tinh tế."
   siteKeywords     = "ảnh gái xinh mobile, hot girl, người mẫu sexy, idol Trung Quốc, Hàn Quốc, Nhật Bản"
   defaultImage     = "images/cover.jpg"
 
-  # ✅ SEO song song desktop ↔ mobile
-  canonicalDomain  = "https://albumgaixinh.netlify.app"
-  desktopDomain    = "https://albumgaixinh.netlify.app"
-  mobileDomain     = "https://albumgaixinh-mobile.netlify.app"
+  # ✅ Quan trọng: Cập nhật DOMAIN mới
+  canonicalDomain  = "https://albumgaixinh.io.vn"
+  desktopDomain    = "https://albumgaixinh.io.vn"
+  mobileDomain     = "https://m.albumgaixinh.io.vn"
 
   # ✅ Metadata
   author       = "Album Gái Xinh Team"
@@ -57,7 +59,7 @@ staticDir  = ["static"]
   organization = "Album Gái Xinh"
   locale       = "vi_VN"
 
-  # ✅ Mạng xã hội
+  # ✅ Mạng xã hội (giữ placeholder)
   facebook  = "https://www.facebook.com/"
   twitter   = "https://twitter.com/"
   instagram = "https://www.instagram.com/"
@@ -70,22 +72,22 @@ staticDir  = ["static"]
   date = ["date", ":default"]
 
 # =====================================================
-# ✅ OUTPUTS (tối ưu, không còn JSON API)
+# ✅ OUTPUTS (TẮT sitemap cho mobile)
+#     - Không có "Sitemap" ở mọi kind
 # =====================================================
 [outputs]
-  home     = ["HTML",]
-  section  = ["HTML",]
+  home     = ["HTML"]
+  section  = ["HTML"]
   taxonomy = ["HTML"]
   term     = ["HTML"]
   page     = ["HTML"]
 
 # =====================================================
 # ✅ MIME & HEADERS CHO NETLIFY
+#     - ❌ Bỏ header sitemap vì mobile KHÔNG phát sitemap
 # =====================================================
-[[headers]]
-  for = "/sitemap.xml"
-  [headers.values]
-    Content-Type = "application/xml; charset=UTF-8"
+
+# (đã xoá khối [[headers]] cho /sitemap.xml)
 
 # =====================================================
 # ✅ MENU CHÍNH (HEADER)

@@ -1,5 +1,4 @@
 User-agent: *
-Allow: /
+Disallow: /
 
-# This is the mobile UI mirror
-# Canonical: https://albumgaixinh.netlify.app/
+# Không có sitemap cho mobile
