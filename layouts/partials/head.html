@@ -1,13 +1,9 @@
 <!-- =========================================================
-✅ HEAD.HTML — Phiên bản MOBILE (chuẩn SEO song song với Desktop)
+✅ HEAD — MOBILE VERSION (NO INDEX, FOLLOW CANONICAL DESKTOP)
 ========================================================= -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<meta name="theme-color" content="#f472b6">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
 
-<!-- ========================================================= -->
-<!-- ✅ Title & Meta Description -->
-<!-- ========================================================= -->
 <title>
   {{ if .IsHome }}
     {{ .Site.Title }} – {{ .Site.Params.description }}
@@ -16,57 +12,57 @@
   {{ end }}
 </title>
 
-{{ if .Description }}
-  <meta name="description" content="{{ .Description }}">
-{{ else }}
-  <meta name="description" content="{{ .Site.Params.description }}">
-{{ end }}
+<!-- ✅ Favicon -->
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#f472b6">
 
-<!-- ========================================================= -->
-<!-- ✅ Canonical & Hreflang (Mobile → trỏ về Desktop) -->
-<!-- ========================================================= -->
-{{ if .Site.Params.isMobile }}
-  <!-- ✅ Mobile canonical luôn về Desktop -->
-  <link rel="canonical" href="{{ .Site.Params.desktopDomain }}{{ .RelPermalink }}">
-  <link rel="alternate" media="only screen and (max-width: 640px)" href="{{ .Permalink }}">
-{{ else }}
-  <!-- ✅ Nếu lỡ load bằng desktop settings -->
-  <link rel="canonical" href="{{ .Permalink }}">
-  <link rel="alternate" media="only screen and (max-width: 640px)" href="{{ .Site.Params.mobileDomain }}{{ .RelPermalink }}">
-{{ end }}
+<!-- ✅ Description -->
+<meta name="description" content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Site.Params.description }}{{ end }}">
 
-<!-- ✅ Hreflang -->
+<!-- ✅ Canonical — MOBILE liên kết về DESKTOP -->
+<link rel="canonical" href="{{ .Site.Params.desktopDomain }}{{ .RelPermalink }}">
+
+<!-- ✅ Google KHÔNG index mobile -->
+<meta name="robots" content="noindex,follow">
+
+<!-- ✅ Hreflang luôn trỏ desktop phiên bản chuẩn -->
 <link rel="alternate" hreflang="vi" href="{{ .Site.Params.desktopDomain }}{{ .RelPermalink }}">
 <link rel="alternate" hreflang="x-default" href="{{ .Site.Params.desktopDomain }}{{ .RelPermalink }}">
 
-<!-- ✅ Robots -->
-<meta name="robots" content="index,follow">
-
-<!-- ========================================================= -->
-<!-- ✅ Open Graph -->
-<!-- ========================================================= -->
-<meta property="og:type" content="website">
-<meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}">
+<!-- ✅ OG metadata về desktop -->
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:title" content="{{ .Title }} | {{ .Site.Title }}">
 <meta property="og:description" content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Site.Params.description }}{{ end }}">
 <meta property="og:url" content="{{ .Site.Params.desktopDomain }}{{ .RelPermalink }}">
 <meta property="og:site_name" content="{{ .Site.Title }}">
 <meta property="og:image" content="{{ with .Params.images }}{{ index . 0 }}{{ else }}{{ .Site.Params.defaultImage | absURL }}{{ end }}">
 
-<!-- ========================================================= -->
-<!-- ✅ Twitter Card -->
-<!-- ========================================================= -->
+<!-- ✅ Twitter -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}">
+<meta name="twitter:title" content="{{ .Title }}">
 <meta name="twitter:description" content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Site.Params.description }}{{ end }}">
 <meta name="twitter:image" content="{{ with .Params.images }}{{ index . 0 }}{{ else }}{{ .Site.Params.defaultImage | absURL }}{{ end }}">
 
-<!-- ========================================================= -->
-<!-- ✅ GA4 -->
-<!-- ========================================================= -->
+<!-- ✅ Preload fonts (đồng bộ desktop) -->
+<link rel="preload" href="/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/Inter-Medium.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
+
+<!-- ✅ Preload first-image album (tăng tốc load mobile) -->
+{{ with index (.Resources.ByType "image") 0 }}
+<link rel="preload" as="image" href="{{ .RelPermalink }}">
+{{ end }}
+
+<!-- ✅ CSS -->
+<link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+<link rel="stylesheet" href="{{ "css/menus.css" | relURL }}">
+
+<!-- ✅ GA4 giữ nguyên -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-VZWN6D3972"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-VZWN6D3972', { send_page_view: true });
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-VZWN6D3972');
 </script>
