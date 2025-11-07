@@ -13,20 +13,39 @@
   TZ = "Asia/Ho_Chi_Minh"
 
 # =====================================================
-# ✅ HTTP HEADERS
+# ✅ SECURITY + PERFORMANCE HEADERS
 # =====================================================
-
-# 🚫 Mobile bản này KHÔNG có sitemap
-# → Không khai báo header cho /sitemap.xml
-
-# Cache rules
 [[headers]]
   for = "/*"
+  [headers.values]
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-XSS-Protection = "1; mode=block"
+
+# =====================================================
+# ✅ HTTP/3 + Brotli
+# =====================================================
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Alt-Svc = 'h3=":443"; ma=86400'
+    Accept-Encoding = "br"
+
+# =====================================================
+# ✅ CACHE RULES
+# =====================================================
+
+# HTML: không cache (để cập nhật realtime nếu cần chỉnh giao diện)
+[[headers]]
+  for = "/*.html"
   [headers.values]
     Cache-Control = "no-cache, no-store, must-revalidate"
     Pragma = "no-cache"
     Expires = "0"
 
+# CSS/JS: cache mạnh
 [[headers]]
   for = "/css/*"
   [headers.values]
@@ -37,12 +56,25 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+# Hình ảnh: cache cực mạnh
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# =====================================================
+# ✅ NOINDEX HEADERS (ngăn index mobile site)
+# =====================================================
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, follow"
+
 # =====================================================
 # ✅ REDIRECT RULES
 # =====================================================
 
 # 🚫 Không redirect mobile → desktop
 # 🚫 Không redirect desktop → mobile
-# 🚫 Không device detection redirect
-
-# (để trống — intentionally blank)
+# 🚫 Không redirect theo thiết bị
+# intentionally blank (để trống)
