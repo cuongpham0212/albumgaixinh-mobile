@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Đang mở quảng cáo...</title>
-  <style>
+    <style>
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
+      height: 100dvh; /* ✅ Thay 100% bằng 100dvh để tương thích iOS Safari */
       background: #0d0d0d;
       color: #fff;
       display: flex;
@@ -17,22 +17,28 @@
       align-items: center;
       text-align: center;
       font-family: system-ui, sans-serif;
+      box-sizing: border-box;
     }
+
     h2 { font-size: 1.4rem; margin-bottom: 0.5rem; }
     p { font-size: 1rem; color: #ccc; }
+
     #countdown {
       font-size: 3rem;
       margin: 1rem 0;
       color: #ff006e;
       font-weight: bold;
     }
+
     footer {
-      position: absolute;
-      bottom: 12px;
+      margin-top: auto; /* ✅ footer luôn đẩy xuống cuối khung */
+      padding-bottom: env(safe-area-inset-bottom, 16px); /* ✅ chừa khoảng tránh che */
       font-size: 0.8rem;
       color: #777;
+      text-align: center;
     }
   </style>
+
 </head>
 <body>
 
