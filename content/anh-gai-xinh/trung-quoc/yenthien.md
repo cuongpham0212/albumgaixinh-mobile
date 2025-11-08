@@ -148,6 +148,18 @@ images = [
 ]
 +++
 
-Thư mục ảnh yenthien - mô tả ngắn. (Bạn có thể auto chèn mô tả bằng script sau.)
+Thư mục ảnh yenthien - mô tả ngắn.
 
-{{< cdn_gallery >}}
+(Bạn có thể auto chèn mô tả bằng script sau.
+
+) {{< cdn_gallery >}}
+
+# Bộ Ảnh Người Mẫu Chuyên Nghiệp
+
+Bộ ảnh người mẫu chuyên nghiệp là nơi cái đẹp được thể hiện bằng sự tự tin và cảm xúc thật, không cần che giấu.
+
+Vẻ đẹp trong tác phẩm không phô bày mà mời gọi bằng cảm xúc và sự tự tin.
+
+Bên cạnh đó, Bố cục trong bộ ảnh người mẫu chuyên nghiệp được xử lý hài hòa, mang đến cảm giác cân đối và tràn đầy năng lượng thị giác.
+
+Cảm ơn bạn đã ghé xem bộ ảnh người mẫu chuyên nghiệp, chúc bạn luôn giữ trong tim những khoảnh khắc đẹp như thế.

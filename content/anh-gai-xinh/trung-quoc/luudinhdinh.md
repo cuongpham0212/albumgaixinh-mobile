@@ -152,6 +152,18 @@ images = [
 ]
 +++
 
-Thư mục ảnh luudinhdinh - mô tả ngắn. (Bạn có thể auto chèn mô tả bằng script sau.)
+Thư mục ảnh luudinhdinh - mô tả ngắn.
 
-{{< cdn_gallery >}}
+(Bạn có thể auto chèn mô tả bằng script sau.
+
+) {{< cdn_gallery >}}
+
+# Ảnh Girl Tone Ấm Vintage
+
+Bộ ảnh bộ ảnh thể hiện sự tự tin và thần thái rạng ngời trong từng chi tiết nhỏ nhất.
+
+Trong những khung hình, ánh sáng được sử dụng một cách tinh tế để tôn lên những đường nét mềm mại của cơ thể.
+
+Càng quan sát, càng cảm nhận rõ rằng, Đôi khi chỉ là ánh nhìn thoáng qua, ảnh girl tone ấm vintage cũng đủ khiến người xem say mê và lắng đọng.
+
+Hy vọng ảnh girl tone ấm vintage sẽ tiếp tục truyền cảm hứng cho bạn về cái đẹp và nghệ thuật chân thật.

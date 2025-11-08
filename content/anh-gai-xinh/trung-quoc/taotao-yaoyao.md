@@ -152,6 +152,18 @@ images = [
 ]
 +++
 
-Thư mục ảnh Taotao-Yaoyao - mô tả ngắn. (Bạn có thể auto chèn mô tả bằng script sau.)
+Thư mục ảnh Taotao-Yaoyao - mô tả ngắn.
 
-{{< cdn_gallery >}}
+(Bạn có thể auto chèn mô tả bằng script sau.
+
+) {{< cdn_gallery >}}
+
+# Ảnh Girl Cá Tính Sexy
+
+Bộ ảnh bộ sưu tập khai thác trọn vẹn vẻ đẹp hình thể, nhưng vẫn giữ được sự thanh lịch và sang trọng.
+
+Từng đường cong, từng ánh sáng trong những khung hình đều được sắp đặt như một bản giao hưởng của cái đẹp.
+
+Bên cạnh đó, Điểm nhấn của ảnh girl cá tính sexy chính là sự kết hợp hài hòa giữa bối cảnh và cảm xúc.
+
+Cảm ơn bạn đã ghé xem ảnh girl cá tính sexy, hẹn gặp lại ở những bộ ảnh tuyệt vời khác.

@@ -141,8 +141,16 @@ images = [
 
 Thư mục ảnh namkieu - mô tả ngắn.
 
-{{< cdn_gallery >}}
-
-Ngắm trọn vẹn ảnh girl sexy cực kỳ bắt mắt.
+{{< cdn_gallery >}} Ngắm trọn vẹn ảnh girl sexy cực kỳ bắt mắt.
 
 Chia sẻ ảnh girl sexy để lan tỏa vẻ đẹp gợi cảm tinh tế.
+
+# Ảnh Chụp Studio Ánh Sáng Da Thịt
+
+Bộ sưu tập những khung hình mang đến cái nhìn mới mẻ, pha trộn giữa quyến rũ và nghệ thuật thị giác.
+
+Bộ bộ sưu tập thể hiện hình thể con người như một tác phẩm nghệ thuật – tràn đầy sức sống và đam mê.
+
+Ngoài ra, Người mẫu trong ảnh chụp studio ánh sáng da thịt thể hiện cảm xúc qua ánh mắt, đôi môi và từng cử chỉ, khiến khung hình trở nên sống động.
+
+Mỗi bức ảnh là một câu chuyện, và ảnh chụp studio ánh sáng da thịt chính là lời kể bằng ánh sáng và cảm xúc.

@@ -150,8 +150,16 @@ nudes = [
 
 Thư mục ảnh Soft-Love3 - mô tả ngắn.
 
-{{< cdn_gallery >}}
-
-Khám phá ngay ảnh gái xinh mang phong cách quyến rũ và sang trọng.
+{{< cdn_gallery >}} Khám phá ngay ảnh gái xinh mang phong cách quyến rũ và sang trọng.
 
 Nếu thấy ảnh gái xinh hấp dẫn, hãy giới thiệu cho người thân.
+
+# Ảnh Girl Cá Tính Sexy
+
+Một bộ sưu tập tác phẩm được thực hiện với phong cách hiện đại và đầy cảm hứng.
+
+Nhiếp ảnh gia đã khéo léo ghi lại khoảnh khắc tự nhiên nhất của người mẫu trong tác phẩm.
+
+Ngoài ra, Người mẫu trong ảnh girl cá tính sexy thể hiện thần thái tự nhiên, ánh mắt biết nói và nụ cười đầy cảm xúc.
+
+Nếu bạn yêu nghệ thuật nhiếp ảnh, ảnh girl cá tính sexy chắc chắn sẽ là nguồn cảm hứng tuyệt vời.

@@ -175,14 +175,20 @@ nudes = [
 ]
 +++
 
-{{< cdn_gallery >}}
-
-# Ảnh Gái Xinh Tạo Dáng
-
-Bộ ảnh tác phẩm khai thác trọn vẹn vẻ đẹp hình thể, nhưng vẫn giữ được sự thanh lịch và sang trọng.
+{{< cdn_gallery >}} # Ảnh Gái Xinh Tạo Dáng Bộ ảnh tác phẩm khai thác trọn vẹn vẻ đẹp hình thể, nhưng vẫn giữ được sự thanh lịch và sang trọng.
 
 Người mẫu trong loạt ảnh thể hiện cảm xúc qua ánh mắt, đôi môi và từng cử chỉ, khiến khung hình trở nên sống động.
 
 Đáng chú ý, Điều khiến ảnh gái xinh tạo dáng đặc biệt chính là sự tự nhiên trong từng khoảnh khắc – không tạo dáng, không gượng ép.
 
 Vẻ đẹp có thể phai, nhưng cảm xúc trong ảnh gái xinh tạo dáng sẽ còn mãi với thời gian.
+
+# Ảnh Girl Studio Ánh Sáng Đẹp
+
+Ảnh girl studio ánh sáng đẹp là sự hòa quyện giữa ánh sáng, góc máy và cảm xúc người mẫu.
+
+Ảnh girl studio ánh sáng đẹp sử dụng tone màu ấm, gợi cảm giác hoài niệm và lãng mạn như những thước phim cũ.
+
+Đặc biệt hơn, Bộ ảnh girl studio ánh sáng đẹp gợi cảm nhưng không gượng ép, tự nhiên như hơi thở và nhịp tim của khoảnh khắc.
+
+Mỗi bức ảnh trong ảnh girl studio ánh sáng đẹp đều là một bản giao hưởng giữa tâm hồn và thị giác.

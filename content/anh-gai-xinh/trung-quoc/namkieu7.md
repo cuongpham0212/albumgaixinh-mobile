@@ -174,8 +174,16 @@ images = [
 
 Thư mục ảnh NamKieu7 - mô tả ngắn.
 
-{{< cdn_gallery >}}
-
-Khám phá bộ ảnh gái xinh đầy mê hoặc và phong cách.
+{{< cdn_gallery >}} Khám phá bộ ảnh gái xinh đầy mê hoặc và phong cách.
 
 Hãy lưu lại ảnh gái xinh để thưởng thức bất cứ lúc nào bạn muốn.
+
+# Ảnh Girl Tone Ấm Vintage
+
+Bộ người mẫu này chắc chắn sẽ khiến bạn phải ngắm nhìn nhiều lần.
+
+Bộ người mẫu gợi cảm nhưng không gượng ép, tự nhiên như hơi thở và nhịp tim của khoảnh khắc.
+
+Điều khiến người xem say mê là, Dù đơn giản, ảnh girl tone ấm vintage vẫn mang lại chiều sâu và cảm giác nghệ thuật rất riêng.
+
+Nếu bạn yêu nghệ thuật nhiếp ảnh, ảnh girl tone ấm vintage sẽ là nguồn cảm hứng bất tận cho những ý tưởng mới.

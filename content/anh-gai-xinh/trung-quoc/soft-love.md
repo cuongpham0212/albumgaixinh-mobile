@@ -162,6 +162,18 @@ images = [
 ]
 +++
 
-Thư mục ảnh Soft-Love - mô tả ngắn. (Bạn có thể auto chèn mô tả bằng script sau.)
+Thư mục ảnh Soft-Love - mô tả ngắn.
 
-{{< cdn_gallery >}}
+(Bạn có thể auto chèn mô tả bằng script sau.
+
+) {{< cdn_gallery >}}
+
+# Ảnh Gái Xinh Chân Dài
+
+Nếu bạn yêu nét đẹp hiện đại pha chút nổi loạn, bộ sưu tập chắc chắn sẽ khiến bạn say đắm.
+
+Mỗi tấm ảnh trong loạt ảnh như một bức tranh, nơi màu sắc và cảm xúc được hòa quyện hoàn hảo.
+
+Càng quan sát, càng cảm nhận rõ rằng, Trong ảnh gái xinh chân dài, ánh sáng không chỉ là yếu tố kỹ thuật mà còn là ngôn ngữ biểu cảm đầy nghệ thuật.
+
+Hy vọng ảnh gái xinh chân dài sẽ tiếp tục truyền cảm hứng cho bạn về cái đẹp và nghệ thuật chân thật.

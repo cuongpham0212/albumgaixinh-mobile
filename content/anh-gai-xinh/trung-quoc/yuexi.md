@@ -138,7 +138,18 @@ images = [
 ]
 +++
 
-Thư mục ảnh Yuexi - mô tả ngắn. (Bạn có thể auto chèn mô tả bằng script sau.)
+Thư mục ảnh Yuexi - mô tả ngắn.
 
-{{< cdn_gallery >}}
+(Bạn có thể auto chèn mô tả bằng script sau.
 
+) {{< cdn_gallery >}}
+
+# Bộ Ảnh Nghệ Thuật
+
+Nếu bạn yêu thích nét đẹp gợi cảm nhưng vẫn tinh tế, bộ sưu tập chính là lựa chọn hoàn hảo.
+
+Khoảng sáng – tối trong tác phẩm nghệ thuật như đang nhảy múa quanh hình thể, tạo nên cảm xúc say mê.
+
+Bên cạnh đó, Điểm nhấn của bộ ảnh nghệ thuật chính là sự kết hợp hài hòa giữa bối cảnh và cảm xúc.
+
+Hy vọng bộ ảnh nghệ thuật đã mang đến cho bạn những phút giây đầy cảm xúc và cảm hứng nghệ thuật.

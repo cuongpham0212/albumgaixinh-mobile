@@ -172,6 +172,18 @@ images = [
 ]
 +++
 
-Thư mục ảnh DuongThanThan2 - mô tả ngắn. (Bạn có thể auto chèn mô tả bằng script sau.)
+Thư mục ảnh DuongThanThan2 - mô tả ngắn.
 
-{{< cdn_gallery >}}
+(Bạn có thể auto chèn mô tả bằng script sau.
+
+) {{< cdn_gallery >}}
+
+# Ảnh Girl Cá Tính
+
+Ảnh girl cá tính là sự hòa quyện giữa nghệ thuật và cảm xúc, gợi lên sự cuốn hút tự nhiên của người con gái.
+
+Nét gợi cảm trong bộ sưu tập được thể hiện qua ánh mắt và nụ cười, hơn là qua cơ thể.
+
+Càng xem càng thấy rằng, Bố cục trong ảnh girl cá tính được xử lý hài hòa, mang đến cảm giác cân đối và tràn đầy năng lượng thị giác.
+
+Nếu bạn yêu nghệ thuật nhiếp ảnh, ảnh girl cá tính sẽ là nguồn cảm hứng bất tận cho những ý tưởng mới.

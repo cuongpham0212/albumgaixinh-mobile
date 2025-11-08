@@ -170,6 +170,18 @@ images = [
 ]
 +++
 
-Thư mục ảnh dapduacuu - mô tả ngắn. (Bạn có thể auto chèn mô tả bằng script sau.)
+Thư mục ảnh dapduacuu - mô tả ngắn.
 
-{{< cdn_gallery >}}
+(Bạn có thể auto chèn mô tả bằng script sau.
+
+) {{< cdn_gallery >}}
+
+# Ảnh Girl Tone Ấm Vintage
+
+Đắm chìm trong tác phẩm – nơi ánh sáng và sắc đẹp hòa quyện hoàn hảo.
+
+Nét gợi cảm trong bộ sưu tập được thể hiện qua ánh mắt và nụ cười, hơn là qua cơ thể.
+
+Bên cạnh đó, Trong từng bức ảnh, làn da và ánh mắt trong ảnh girl tone ấm vintage được tôn vinh một cách mềm mại và tinh tế.
+
+Nếu bạn yêu nghệ thuật nhiếp ảnh, ảnh girl tone ấm vintage sẽ là nguồn cảm hứng bất tận cho những ý tưởng mới.

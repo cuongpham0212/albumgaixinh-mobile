@@ -171,6 +171,18 @@ images = [
 ]
 +++
 
-Thư mục ảnh DuongThanThan - mô tả ngắn. (Bạn có thể auto chèn mô tả bằng script sau.)
+Thư mục ảnh DuongThanThan - mô tả ngắn.
 
-{{< cdn_gallery >}}
+(Bạn có thể auto chèn mô tả bằng script sau.
+
+) {{< cdn_gallery >}}
+
+# Ảnh Girl Tự Nhiên Đời Thường
+
+Ảnh girl tự nhiên đời thường là sự hòa quyện giữa nghệ thuật và cảm xúc, gợi lên sự cuốn hút tự nhiên của người con gái.
+
+Bộ loạt ảnh khiến người xem liên tưởng đến sự tự do, nhẹ nhàng và tràn đầy sức sống.
+
+Càng quan sát, càng cảm nhận rõ rằng, Sự mềm mại trong ảnh girl tự nhiên đời thường khiến người xem không chỉ ngắm mà còn cảm nhận được không khí của bức ảnh.
+
+Hy vọng ảnh girl tự nhiên đời thường đã mang đến cho bạn những phút giây thư giãn và cảm xúc tích cực.

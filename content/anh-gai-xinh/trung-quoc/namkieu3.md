@@ -147,8 +147,16 @@ nudes = [
 
 Thư mục ảnh NamKieu3 - mô tả ngắn.
 
-{{< cdn_gallery >}}
-
-Thưởng thức ảnh gái xinh đẹp mắt, mang thần thái cuốn hút.
+{{< cdn_gallery >}} Thưởng thức ảnh gái xinh đẹp mắt, mang thần thái cuốn hút.
 
 Đừng quên lưu lại ảnh gái xinh để chia sẻ cùng bạn bè.
+
+# Ảnh Chụp Nghệ Thuật
+
+Ánh sáng và bóng tối trong bộ sưu tập hòa quyện tạo nên bức tranh cảm xúc đầy sức sống.
+
+Ảnh chụp nghệ thuật được thực hiện với ánh sáng dịu, giúp tôn lên đường nét thanh thoát của nhân vật.
+
+Đáng chú ý, Trong ảnh chụp nghệ thuật, sự kết hợp giữa thiên nhiên và con người tạo nên bức tranh hài hòa đến lạ.
+
+Cảm xúc từ ảnh chụp nghệ thuật có thể qua đi, nhưng vẻ đẹp của từng khung hình vẫn còn đọng lại mãi.

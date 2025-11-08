@@ -164,6 +164,18 @@ images = [
 ]
 +++
 
-Thư mục ảnh Soft-Love2 - mô tả ngắn. (Bạn có thể auto chèn mô tả bằng script sau.)
+Thư mục ảnh Soft-Love2 - mô tả ngắn.
 
-{{< cdn_gallery >}}
+(Bạn có thể auto chèn mô tả bằng script sau.
+
+) {{< cdn_gallery >}}
+
+# Ảnh Nghệ Thuật Bán Nude
+
+Khám phá người mẫu – nơi ánh sáng dịu dàng ôm trọn những đường cong quyến rũ.
+
+Trong những khung hình, vẻ đẹp được nâng niu bằng nghệ thuật và cảm xúc, không cần lời nào để diễn tả.
+
+Không dừng lại ở đó, Từng chi tiết trong ảnh nghệ thuật bán nude – từ bố cục, ánh sáng đến biểu cảm – đều được trau chuốt tỉ mỉ.
+
+Hy vọng ảnh nghệ thuật bán nude sẽ tiếp tục truyền cảm hứng cho bạn về cái đẹp và nghệ thuật chân thật.

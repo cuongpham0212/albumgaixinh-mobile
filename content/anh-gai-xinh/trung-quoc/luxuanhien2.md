@@ -162,6 +162,18 @@ images = [
 ]
 +++
 
-Thư mục ảnh luxuanhien2 - mô tả ngắn. (Bạn có thể auto chèn mô tả bằng script sau.)
+Thư mục ảnh luxuanhien2 - mô tả ngắn.
 
-{{< cdn_gallery >}}
+(Bạn có thể auto chèn mô tả bằng script sau.
+
+) {{< cdn_gallery >}}
+
+# Ảnh Girl Studio Ánh Sáng Đẹp
+
+Ảnh girl studio ánh sáng đẹp là sự hòa quyện giữa ánh sáng, góc máy và cảm xúc người mẫu.
+
+Vẻ đẹp trong series ảnh không phô bày mà mời gọi bằng cảm xúc và sự tự tin.
+
+Đáng chú ý, Bộ ảnh girl studio ánh sáng đẹp gợi cảm nhưng không gượng ép, tự nhiên như hơi thở và nhịp tim của khoảnh khắc.
+
+Hy vọng ảnh girl studio ánh sáng đẹp đã mang đến cho bạn những phút giây thư giãn và cảm xúc tích cực.

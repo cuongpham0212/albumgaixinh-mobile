@@ -181,14 +181,20 @@ nudes = [
 ]
 +++
 
-{{< cdn_gallery >}}
-
-# Ảnh Chân Dung Ánh Sáng Đẹp
-
-Khám phá những khung hình – nơi ánh sáng, đường cong và cảm xúc hòa quyện đầy nghệ thuật.
+{{< cdn_gallery >}} # Ảnh Chân Dung Ánh Sáng Đẹp Khám phá những khung hình – nơi ánh sáng, đường cong và cảm xúc hòa quyện đầy nghệ thuật.
 
 Nhiếp ảnh gia đã khéo léo truyền tải sự quyến rũ một cách tinh tế – không phô trương, không gượng gạo.
 
 Bên cạnh đó, Người mẫu trong ảnh chân dung ánh sáng đẹp thể hiện thần thái tự nhiên, ánh mắt biết nói và nụ cười đầy cảm xúc.
 
 Cảm ơn bạn đã đồng hành cùng ảnh chân dung ánh sáng đẹp, đừng quên chia sẻ cảm nhận của bạn nhé!
+
+# Ảnh Chụp Nghệ Thuật
+
+Cùng ngắm nhìn series ảnh mang đến cảm xúc nhẹ nhàng và đầy cuốn hút.
+
+Điểm nhấn của tác phẩm nghệ thuật chính là sự kết hợp hài hòa giữa bối cảnh và cảm xúc.
+
+Thêm vào đó, Bộ ảnh chụp nghệ thuật khai thác tuyệt vời sự tương phản giữa ánh sáng và bóng tối, tạo nên chiều sâu cho khung hình.
+
+Cảm ơn bạn đã đồng hành cùng ảnh chụp nghệ thuật, nơi cái đẹp được thể hiện bằng cảm xúc và ánh sáng.
