@@ -166,9 +166,24 @@ staticDir  = ["static"]
   weight = 1
 
 [[menu.footer]]
+  name = "Chính sách nội dung"
+  url = "/chinh-sach-noi-dung/"
+  weight = 2
+
+[[menu.footer]]
   name = "Điều khoản sử dụng"
   url = "/terms-of-service/"
-  weight = 2
+  weight = 3
+
+[[menu.footer]]
+  name = "Chính sách bảo mật"
+  url = "/privacy/"
+  weight = 4
+
+[[menu.footer]]
+  name = "Liên hệ"
+  url = "/lien-he/"
+  weight = 5
 
 [[menu.footer]]
   name = "Giải tỏa nỗi lòng"
