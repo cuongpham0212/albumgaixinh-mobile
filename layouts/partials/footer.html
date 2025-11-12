@@ -30,13 +30,7 @@
     </a>
   </div>
 
-  <div class="mt-4">
-    <a href="{{ .Site.Params.desktopDomain }}{{ .RelPermalink }}"
-       class="text-xs text-gray-400 hover:text-pink-500">
-      Xem phiên bản Desktop
-    </a>
-  </div>
-</footer>
+  </footer>
 
 <!-- ✅ Font Awesome (CDN, đã đóng thẻ đầy đủ) -->
 <link rel="stylesheet"
@@ -46,6 +40,17 @@
 <!-- ⚠️ Ghi chú: main.js đã được load trong baseof.html, 
      nên KHÔNG load lại ở đây để tránh trùng và lỗi render -->
 
+<!-- 🌙 CSS nội tuyến — Auto Dark Mode (theo hệ thống) -->
+<style>
+@media (prefers-color-scheme: dark) {
+  footer {
+    background-color: #111827 !important; /* Slate-900 */
+    border-top-color: #1f2937 !important; /* Slate-800 */
+  }
+}
+</style>
+
+<!-- ⚙️ Lazy-load ảnh -->     
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   const lazyImgs = document.querySelectorAll("img[data-src]");
