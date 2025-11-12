@@ -1,6 +1,6 @@
 ﻿+++
-title = "Ngắm nhìn Ảnh ấn tượng Chinh Sach Noi Dung, với outfit khiến ai cũng chú ý đáng xem hôm nay"
-description = "Ngắm nhìn album của Chinh Sach Noi Dung hot beauty sexy cháy bỏng, khiến người xem không khỏi ngẩn ngơ trước vẻ đẹp nóng bỏng."
+title = "Chính sách nội dung"
+description = "Chính Sách Nội Dung & Quan Điểm Về Ảnh Nude Nghệ Thuật."
 keywords = ["nude nghệ thuật", "ảnh nude", "ảnh body", "ảnh glamour", "ảnh nghệ thuật", "ảnh gợi cảm"]
 slug = "chinh-sach-noi-dung"
 +++

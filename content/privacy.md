@@ -1,6 +1,6 @@
 ﻿+++
-title = "Ngắm nhìn Ảnh ấn tượng Pri vac y, với gu thời trang táo bạo bộ sưu tập cực cuốn"
-description = "Chiêm ngưỡng bộ ảnh của Pri Vac Y nữ thần gợi cảm hấp dẫn từng ánh nhìn, khơi gợi nét quyến rũ tự nhiên đầy mê hoặc."
+title = "Chính Sách Bảo Mật"
+description = "Chính Sách Bảo Mật tại Album Gái Xinh ."
 keywords = ["chính sách bảo mật", "quyền riêng tư", "cookie", "google adsense", "google analytics"]
 slug = "privacy"
 +++

@@ -1,6 +1,6 @@
 ﻿+++
-title = "Ngắm nhìn Album ảnh đẹp Terms Of Service, cực kỳ thu hút bộ sưu tập cực cuốn"
-description = "Bộ sưu tập của Terms Of Service quý cô gợi cảm đầy lôi cuốn, khơi gợi nét quyến rũ tự nhiên đầy mê hoặc."
+title = "Điều khoản sử dụng"
+description = "Điều khoản sử dụng"
 keywords = ["điều khoản sử dụng", "quy định website", "nội dung nghệ thuật", "trách nhiệm người dùng"]
 slug = "terms-of-service"
 +++

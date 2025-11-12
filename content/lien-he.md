@@ -1,6 +1,6 @@
 ﻿+++
-title = "Ngắm nhìn Ảnh ấn tượng Lien He, khiến dân mạng chao đảo đáng xem hôm nay"
-description = "Bộ sưu tập của Lien He nữ thần gợi cảm hấp dẫn từng ánh nhìn, thể hiện vẻ đẹp tự nhiên nhưng không phô trương."
+title = "Liên hệ & Báo cáo Ảnh Vi Phạm"
+description = "Liên hệ & Báo cáo Ảnh Vi Phạm"
 keywords = ["liên hệ", "báo cáo ảnh vi phạm", "ảnh nude nghệ thuật", "gỡ ảnh", "ảnh cá nhân", "kiểm duyệt nội dung", "fanpage"]
 slug = "lien-he"
 +++
@@ -17,7 +17,6 @@ Nếu bạn phát hiện **hình ảnh trên site** có dấu hiệu **vi phạm
 ---
 
 {{< report_form >}}
-
 
 ---
 
