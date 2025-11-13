@@ -25,12 +25,3 @@ Nếu bạn phát hiện **hình ảnh trên site** có dấu hiệu **vi phạm
 - Vui lòng cung cấp **link hợp lệ** để xác minh nhanh chóng.  
 - Báo cáo hợp lệ sẽ được phản hồi trong thời gian sớm nhất.
 
-# Ảnh Girl Cá Tính Sexy
-
-Bộ ảnh những khung hình thể hiện sự tự tin và thần thái rạng ngời trong từng chi tiết nhỏ nhất.
-
-Nét gợi cảm trong tác phẩm nghệ thuật được thể hiện qua ánh mắt và nụ cười, hơn là qua cơ thể.
-
-Không dừng lại ở đó, Từng khung hình trong ảnh girl cá tính sexy như lột tả được nét đẹp nguyên bản của người phụ nữ – mềm mại mà mạnh mẽ.
-
-Cảm ơn bạn đã ghé xem ảnh girl cá tính sexy, chúc bạn luôn giữ trong tim những khoảnh khắc đẹp như thế.

@@ -29,12 +29,3 @@ Website hoạt động với tiêu chí:
 👉 Đọc thêm: [Chính sách nội dung & quan điểm nghệ thuật](/chinh-sach-noi-dung/)  
 👉 Cần báo cáo ảnh vi phạm? [Liên hệ tại đây](/lien-he/)
 
-# Ảnh Chân Dung Gợi Cảm
-
-Bộ ảnh bộ sưu tập mang hơi thở tự nhiên, giản dị nhưng không kém phần quyến rũ.
-
-Nét gợi cảm trong bộ ảnh được thể hiện qua ánh mắt và nụ cười, hơn là qua cơ thể.
-
-Một điểm tinh tế khác là, Tone sáng ấm áp trong ảnh chân dung gợi cảm khiến mọi khung hình trở nên quyến rũ mà vẫn nhẹ nhàng.
-
-Mỗi bức ảnh là một câu chuyện, và ảnh chân dung gợi cảm chính là lời kể bằng ánh sáng và cảm xúc.
