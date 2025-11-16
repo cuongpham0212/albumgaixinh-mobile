@@ -1,6 +1,6 @@
 ﻿+++
-title = "Lien He"
-description = "Lien He"
+title = "Liên hệ & Báo cáo Ảnh Vi Phạm"
+description = "Liên hệ & Báo cáo Ảnh Vi Phạm"
 keywords = ["liên hệ", "báo cáo ảnh vi phạm", "ảnh nude nghệ thuật", "gỡ ảnh", "ảnh cá nhân", "kiểm duyệt nội dung", "fanpage"]
 slug = "lien-he"
 +++
@@ -25,3 +25,4 @@ Nếu bạn phát hiện **hình ảnh trên site** có dấu hiệu **vi phạm
 - Báo cáo sẽ **tự động gửi nội dung** đến fanpage [Album Gái Xinh](https://www.facebook.com/albumgaixinh) qua Messenger.  
 - Vui lòng cung cấp **link hợp lệ** để xác minh nhanh chóng.  
 - Báo cáo hợp lệ sẽ được phản hồi trong thời gian sớm nhất.
+

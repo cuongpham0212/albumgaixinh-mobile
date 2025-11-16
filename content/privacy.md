@@ -2,7 +2,7 @@
 title = "Chính Sách Bảo Mật"
 description = "Chính Sách Bảo Mật."
 keywords = ["chính sách bảo mật", "quyền riêng tư", "cookie", "google adsense", "google analytics"]
-slug = "privacy"
+slug = "pri-vac-y"
 +++
 
 # 🔒 Chính Sách Bảo Mật
@@ -28,3 +28,5 @@ Bạn có thể **tắt cookie** trong cài đặt trình duyệt nếu không m
 Chúng tôi không chịu trách nhiệm về nội dung của website bên ngoài.
 
 👉 Tham khảo thêm: [Điều khoản sử dụng](/terms-of-service/)
+
+

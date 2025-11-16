@@ -1,5 +1,5 @@
 ﻿+++
-title = "Gioi Thieu"
+title = "Giới thiệu"
 description = "Album Gái Xinh – bộ sưu tập hình ảnh gái xinh, ảnh body nghệ thuật, mang lại cảm xúc và năng lượng tích cực mỗi ngày."
 keywords = ["gái xinh", "album gái xinh", "ảnh đẹp", "ảnh nghệ thuật", "ảnh body"]
 slug = "gioi-thieu"

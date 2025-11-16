@@ -1,5 +1,5 @@
 ﻿+++
-title = "Chiêm ngưỡng Ảnh nổi bật Thiên Ni collection 2, khiến cả thế giới phải ghen tị đáng xem hôm nay"
+title = "Ngắm nhìn Ảnh thần tượng Thiên Ni collection 2, gây thương nhớ đáng xem hôm nay"
 date = "2025-10-23T00:00:00"
 type = "anh-gai-xinh"
 layout = "single"
