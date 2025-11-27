@@ -1,0 +1,4 @@
+# =========================================================
+# 🌍 Redirect domain Netlify Mobile -> domain Mobile chính
+# =========================================================
+https://albumgaixinh-mobile.netlify.app/*   https://m.albumgaixinh.io.vn/:splat   301!
