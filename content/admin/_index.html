@@ -1,0 +1,85 @@
+---
+title: "Admin Login"
+type: "admin"
+url: "/admin/"
+---
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AGX Admin Login</title>
+
+<style>
+body { font-family: Arial, sans-serif; background:#f1f1f1; display:flex; justify-content:center; align-items:center; height:100vh; margin:0; }
+.container {
+  background:#fff; padding:32px; border-radius:12px;
+  width:360px; text-align:center; box-shadow:0 4px 10px rgba(0,0,0,.15);
+}
+button {
+  background:#1877f2; color:#fff; padding:14px 20px;
+  font-size:18px; border:none; border-radius:8px;
+  cursor:pointer; margin-top:18px; width:100%;
+}
+input {
+  width:100%; padding:10px; margin-top:12px; font-size:15px;
+  border-radius:8px; border:1px solid #ccc;
+}
+h2 { margin:0; margin-bottom:10px; color:#d00000; }
+</style>
+
+<script>
+window.fbAsyncInit = function () {
+  FB.init({
+    appId: '1755313378516808',
+    cookie: true,
+    xfbml: true,
+    version: 'v19.0'
+  });
+};
+
+(function (d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "https://connect.facebook.net/vi_VN/sdk.js";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
+function loginFacebook() {
+  FB.login(function (res) {
+    if (!res.authResponse) {
+      alert("Bạn đã hủy đăng nhập");
+      return;
+    }
+
+    FB.api('/me/accounts', function (pages) {
+      if (!pages || !pages.data || pages.data.length === 0) {
+        alert("Không tìm thấy Fanpage nào bạn quản lý.");
+        return;
+      }
+
+      let page = pages.data[0]; // hoặc sau này làm dropdown chọn fanpage
+      document.getElementById("token").value = page.access_token;
+      alert("Đăng nhập thành công! Vui lòng copy token.");
+    });
+
+  }, { scope: 'pages_manage_posts,pages_read_engagement,pages_show_list,pages_manage_metadata,pages_read_user_content,pages_manage_engagement' });
+}
+</script>
+</head>
+<body>
+
+<div class="container">
+  <h2>AGX Admin Login</h2>
+  <p>Nhấn đăng nhập Facebook để lấy token Fanpage</p>
+
+  <button onclick="loginFacebook()">🔐 Đăng nhập bằng Facebook</button>
+
+  <input id="token" readonly placeholder="Token Fanpage sẽ hiển thị tại đây">
+  <p style="font-size:12px; margin-top:8px;">Copy token và dán vào ứng dụng Auto-Post</p>
+</div>
+
+</body>
+</html>
